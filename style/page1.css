@@ -1,0 +1,555 @@
+@font-face {
+    font-family: Lato;
+    src: url(../font/Lato-Light.ttf);
+}
+@font-face {
+    font-family: Lato-Regular;
+    src: url(../font/Lato-Regular.ttf);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: 0.2s linear;
+}
+:root{
+    --theme-deafult: #ff4c3b;
+}
+body{
+    font-family: Lato, sans-serif;
+    position: relative;
+    background: #910808;     /*#ffffff*/
+    font-size: 14px;
+    overflow-x: hidden;
+    min-width: unset !important;
+}
+a{
+    color: #222222;
+}
+ul{
+    list-style: none;
+}
+
+/* //////////////////////////////////////////////////Header\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+header {
+    background-color: #ffffff;
+}
+
+/* ////////////////////////////////////////Header Top\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+.top-header{
+    background: #f8f8f8;
+}
+.container{
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x)* 0.5);
+    padding-left: calc(var(--bs-gutter-x)* 0.5);
+    margin-right: auto;
+    margin-left: auto;
+}
+.top-header .container .row{
+    display: flex;
+    justify-content: space-around;
+    margin: 0px 50px;
+    padding: 15px 0px;
+}
+.row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1* var(--bs-gutter-y));
+    margin-right: calc(-0.5* var(--bs-gutter-x));
+    margin-left: calc(-0.5* var(--bs-gutter-x));
+}
+.row > *{
+    padding-right: calc(var(--bs-gutter-x)* 0.5);
+    padding-left: calc(var(--bs-gutter-x)* 0.5);
+    margin-top: var(--bs-gutter-y);
+}
+.top-header .container .row .header-content-left{
+    display: flex;
+    gap: 25px;
+    width: 50%;
+    color: #999999;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+}
+.top-header .container .row .header-content-left .phon-number{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+.top-header .container .row .header-content-left .phon-number i{
+    color: var(--theme-deafult);
+}
+.top-header .container .row .header-content-Right{
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+    width: 50%;
+    color: #999999;
+    font-size: 14px;
+    line-height: 21px;
+}
+.top-header .container .row .header-content-Right div{
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    cursor: pointer;
+}
+.top-header .container .row .header-content-Right .my-account{
+    position: relative;
+}
+.my-account:before {
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    left: 100px;
+    top: 2px;
+}
+
+/* ////////////////////////////////////////Header Down\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 64px;
+    padding: 40px 0;
+}
+.header-down .container .menu .menu-left{
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+.header-down .container .menu .menu-left i{
+    font-size: 24px;
+}
+.header-down .container .menu .menu-right{
+    display: flex;
+    align-items: center;
+    margin-top: -5px;
+}
+.header-down .container .menu .menu-right .link-menu h3{
+    display: inline;
+    font-family: Lato-Regular;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23px;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-top: 42px;
+    padding-bottom: 42px;
+    padding-left: 0;
+    letter-spacing: 0.07em;
+    position: relative;
+    cursor: pointer;
+}
+.header-down .container .menu .menu-right .link-menu div{
+    display: inline;
+}
+.link-menu .choose li{
+    display: block;
+    position: relative;
+    text-transform: capitalize; 
+    padding-top: 15px;
+    padding-left: 25px;
+    color: #222222;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.9;
+}
+.link-menu .choose li::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 26px;
+    width: 0;
+    height: 2px;
+    background: var(--theme-deafult);
+    transition: width 0.3s;
+}
+.link-menu .choose-second li{
+    display: block;
+    position: relative;
+    text-transform: capitalize; 
+    padding-top: 15px;
+    padding-left: 25px;
+    color: #222222;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.9;
+}
+.link-menu .choose-second li::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 26px;
+    width: 0;
+    height: 2px;
+    background: var(--theme-deafult);
+    transition: width 0.3s;
+}
+.choose li:hover::after,
+.choose-second li:hover::after{
+    width: 21%;
+}
+
+.choose-second li:hover .choose li:hover::after{
+    width: 0;
+}
+
+/* //////////////////////////////Menu Home\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+.header-down .container .menu .menu-right .link-menu .home{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .home .choose{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu div:hover span ,
+ .header-down .container .menu .menu-right .link-menu div:hover h3{
+    color: var(--theme-deafult) !important;
+}
+.header-down .container .menu .menu-right .link-menu .home:hover .choose{
+    display: block;
+}
+.container .menu .menu-right .link-menu .home .choose li span{
+    position: absolute;
+    top: 70%;
+    margin-top: -17px;
+    left: 170px;
+      right: 15px;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    font: bold 16px / 34px monospace !important;
+    text-align: center;
+    text-shadow: none;
+    border-radius: 4px;
+}
+.container .menu .menu-right .link-menu .home .choose li span::before{
+    content: "\f105";
+    font-family: FontAwesome;
+    position: absolute;
+}
+.header-down .container .menu .menu-right .link-menu .home .choose li{
+    position: relative;
+}
+.container .menu .menu-right .link-menu .home .choose li .choose-second{
+    position: absolute;
+    top: 0px;
+    left: 200px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.menu .menu-right .link-menu .home .choose li:hover .choose-second{
+    display: block;
+}
+
+/* //////////////////////////////Menu Shop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu .menu-right .link-menu .shop{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .shop .choose{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu .shop:hover .choose{
+    display: block;
+}
+
+/* //////////////////////////////Menu Products\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu .menu-right .link-menu .products{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .products .choose{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu .products:hover .choose{
+    display: block;
+}
+.container .menu .menu-right .link-menu .products .choose li span{
+    position: absolute;
+    top: 70%;
+    margin-top: -17px;
+    left: 170px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    font: bold 16px / 34px monospace !important;
+    text-align: center;
+    text-shadow: none;
+    border-radius: 4px;
+}
+.container .menu .menu-right .link-menu .products .choose li span::before{
+    content: "\f105";
+    font-family: FontAwesome;
+    position: absolute;
+}
+.header-down .container .menu .menu-right .link-menu .products .choose li{
+    position: relative;
+}
+.container .menu .menu-right .link-menu .products .choose .first .choose-second{
+    position: absolute;
+    top: 0px;
+    left: 200px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.menu .menu-right .link-menu .products .choose .first:hover .choose-second {
+    display: block;
+}
+
+/* //////////////////////////////Menu Features\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu .menu-right .link-menu .features{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .features .choose{
+    position: absolute;
+    top: 40px;
+    left: -890px;
+    width: 1316px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu .features:hover .choose{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+}
+.header-down .container .menu .menu-right .link-menu .features .choose .column .title h5{
+    margin-left: 25px;
+    font-size: 14px;
+    font-family: 'Lato-Regular';
+}
+
+.header-down .container .menu .menu-right .link-menu .lable-new{
+    position: absolute;
+    background-color: var(--theme-deafult);
+    padding: 2px 7px;
+    color: #ffffff;
+    top: -20px;
+    text-transform: uppercase;
+    font-size: 9px;
+    left: 0;
+    line-height: 1.3;
+}
+.header-down .container .menu .menu-right .link-menu .lable-new::before{
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--theme-deafult);
+    top: 15px;
+    left: 5px;
+}
+
+/* //////////////////////////////Menu Blogs\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+.header-down .container .menu .menu-right .link-menu .blogs{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .blogs .choose{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu .blogs:hover .choose{
+    display: block;
+}
+
+/* //////////////////////////////Menu Pages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu .menu-right .link-menu .pages{
+    position: relative;
+}
+.header-down .container .menu .menu-right .link-menu .pages .choose{
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.header-down .container .menu .menu-right .link-menu .pages:hover .choose{
+    display: block;
+}
+.container .menu .menu-right .link-menu .pages .choose li span{
+    position: absolute;
+    top: 70%;
+    margin-top: -17px;
+    left: 170px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    font: bold 16px / 34px monospace !important;
+    text-align: center;
+    text-shadow: none;
+    border-radius: 4px;
+}
+.container .menu .menu-right .link-menu .pages .choose li span::before{
+    content: "\f105";
+    font-family: FontAwesome;
+    position: absolute;
+}
+.header-down .container .menu .menu-right .link-menu .pages .choose li{
+    position: relative;
+}
+.container .menu .menu-right .link-menu .pages .choose li .choose-second{
+    position: absolute;
+    top: 0px;
+    left: 200px;
+    width: 200px;
+    box-shadow: 0 0 1px 0 #ebebeb;
+    padding: 15px 0px 15px 0px;
+    background: white;
+    display: none;
+}
+.menu .menu-right .link-menu .pages .choose li:hover .choose-second{
+    display: block;
+}
+
+/* /////////////////////////Menu Sub Arrow Icon\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+.header-down .container .menu .menu-right .link-menu .sub-arrow{
+    padding-right: 40px;
+    padding-left: 5px;
+    line-height: 23px;
+    font-size: 16px;
+}
+.header-down .container .menu .menu-right .link-menu .sub-arrow::before{
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    font-weight: bolder;
+    padding-right: 45px;
+}
+
+/* /////////////////////////Menu Icons\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.header-down .container .menu .menu-right .icon-menu{
+    display: flex;
+    height: 24px;
+    gap: 15px;
+}
+.header-down .container .menu .menu-right .icon-menu .count-products-purchased{
+    position: absolute;
+    background: var(--theme-deafult);
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    top: 80px;
+    right: 65px;
+    padding: 3px 3px;
+}
+
+
+
+
+
+
+
+/* //////////////////////////////Setting Fixed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+header .setting{
+    position: fixed;
+    top: 50%;
+    background-color: #f7f7f7;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: 0px 0px 5px 0px rgba(154, 154, 154, 0.54);
+    transition: all 0.5s ease;
+    z-index: 2;
+}
+
+/* //////////////////////////////Dark Mode Fixed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+header .dark-mode{
+    position: fixed;
+    right: 0;
+    width: 40px;
+    height: 38px;
+    display: flex;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #f7f7f7;
+    box-shadow: 0px 0px 5px 0px rgba(154, 154, 154, 0.54);
+    top: calc(50% + 52px);
+    cursor: pointer;
+}
