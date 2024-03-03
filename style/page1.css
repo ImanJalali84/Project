@@ -585,6 +585,16 @@ header .dark-mode{
     position: absolute;
     top: 0;
 }
+.slider-item1{
+    background-image: url(../image/Slide-Clock1.png);
+    background-size: cover;
+    background-position: right;
+}
+.slider-item2{
+    background-image: url(../image/Slide-Clock2.png);
+    background-size: cover;
+    background-position: right;
+}
 .slider-item .img-slider img{
     max-width:100vw;
     position: absolute;
@@ -673,11 +683,10 @@ header .dark-mode{
 
 /*  //////////////////////////////////////////////////Brands\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  */
 
-
 .list-brands {
     display: flex;
     scroll-snap-type: x mandatory;
-    overflow: auto;
+    overflow: hidden;
     margin: 50px 0;
 }
 .list-brands .brand {
@@ -956,6 +965,10 @@ img, svg {
     padding-left: 25px;
     padding-right: 25px;
 }
+.trending-products .popular-categories .popular-category .nav-link{
+    text-transform: uppercase;
+    cursor: pointer;
+}
 .trending-products .popular-categories .popular-category .nav-link.active{
     color: var(--theme-deafult);
 } 
@@ -976,7 +989,12 @@ img, svg {
 .watch {
     display: flex;
     flex-direction: column;
+    transform: translate(0%,0%) scale(0);
+    transition: transform 0.5s;
     
+}
+.watch.active{
+    transform: translate(0%,0%) scale(1);
 }
 .description-watch {
     margin-top: auto;
