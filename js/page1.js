@@ -81,7 +81,7 @@ let watches = [
         watchName:'watch2',
         PriceAfterDiscount:207.00,
         PriceBeforeDiscount:345.00,
-        colorImage : [{color : 'silver',image : "../image/watches/watch2/2.jpg"},{color : 'sienna', image : '../image/watches/watch2/3.jpg"'}],
+        colorImage : [{color : 'silver',image : "../image/watches/watch2/2.jpg"},{color : 'sienna', image : '../image/watches/watch2/3.jpg'}],
         new : true,
         sale : false,
         best : false,
@@ -238,7 +238,7 @@ let watches = [
         watchName:'watch16',
         PriceAfterDiscount:80.00,
         PriceBeforeDiscount:160.00,
-        colorImage : [{color : 'navy',image : "../image/watches/watch16/15.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
+        colorImage : [{color : 'bisque',image : "../image/watches/watch16/15.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
         new : true,
         sale : true,
         best : false,
@@ -252,7 +252,7 @@ popularCategoryNavLink1.addEventListener( 'click', () => {
     watchesContainer.innerHTML=""
     watches.forEach( watch => {
         if (watch.new){
-            createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount)
+            createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage)
         }
     })
 })
@@ -263,7 +263,7 @@ popularCategoryNavLink2.addEventListener( 'click', () => {
     watchesContainer.innerHTML=""
     watches.forEach( watch => {
     if (watch.sale){
-        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount)
+        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage)
     }
 })
 })
@@ -274,39 +274,54 @@ popularCategoryNavLink3.addEventListener( 'click', () => {
     watchesContainer.innerHTML=""
     watches.forEach( watch => {
     if (watch.best){
-        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount)
+        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage)
     }
 })
 })
 
 watches.forEach( watch => {
     if (watch.new){
-        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount)
+        createBoxTrendingProducts(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage)
     }
 })
-function createBoxTrendingProducts (image,watchName,PriceAfterDiscount,PriceBeforeDiscount){
-    watchesContainer.insertAdjacentHTML('beforeend', `
-        <div class="watch">
-            <a href="#" class="imglink"><img src="${image}" alt="watch"></a>
-            <div class="star">
-                <i class="fa fa-star" style="color: #edb867;"></i>
-                <i class="fa fa-star" style="color: #edb867;"></i>
-                <i class="fa fa-star" style="color: #edb867;"></i>
-                <i class="fa fa-star" style="color: #edb867;"></i>
-                <i class="fa fa-star" style="color: #edb867;"></i>
-            </div>
-            <div class="description-watch">
-                <a href="#" class="watch-name">${watchName}</a>
-                <h4 class="price">$${PriceAfterDiscount} <span>$${PriceBeforeDiscount}</span></h4>
-                <ul class="colors">
-                </ul>
-            </div>
-        </div>`)
-}
-const watchesBox = $.querySelectorAll('.watch');
+function createBoxTrendingProducts(image, watchName, PriceAfterDiscount, PriceBeforeDiscount, colors) {
+    let colorLiElements = createColorLiElem(colors);
+    const watchContainer = document.createElement('div');
+    watchContainer.classList.add('watch');
+    watchContainer.innerHTML = 
+        `<a href="#" class="imglink"><img src="${image}" alt="watch"></a>
+        <div class="star">
+            <i class="fa fa-star" style="color: #edb867;"></i>
+            <i class="fa fa-star" style="color: #edb867;"></i>
+            <i class="fa fa-star" style="color: #edb867;"></i>
+            <i class="fa fa-star" style="color: #edb867;"></i>
+            <i class="fa fa-star" style="color: #edb867;"></i>
+        </div>
+        <div class="description-watch">
+            <a href="#" class="watch-name">${watchName}</a>
+            <h4 class="price">$${PriceAfterDiscount} <span>$${PriceBeforeDiscount}</span></h4>
+            <ul class="colors">
+                ${colorLiElements}
+            </ul>
+        </div>`
+    ;
 
-$.addEventListener('DOMContentLoaded' , ()=>{
-    watchesBox.forEach(watchBox =>{
-        watchBox.classList.add('active')
-    })
-})
+    watchesContainer.appendChild(watchContainer);
+
+    const colorLiItems = watchContainer.querySelectorAll('.colors li');
+    colorLiItems.forEach((li, index) => {
+        li.addEventListener('click', () => {
+            const selectedImage = colors[index].image;
+            const imgElement = watchContainer.querySelector('img');
+            imgElement.src = selectedImage;
+        });
+    });
+}
+
+function createColorLiElem(colors) {
+    let colorLiElements = "";
+    colors.forEach(colorObj => {
+        colorLiElements += '<li class="color" style="background-color: ' + colorObj.color + '"></li>';
+    });
+    return colorLiElements;
+}

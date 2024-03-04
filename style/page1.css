@@ -624,6 +624,7 @@ header .dark-mode{
     line-height: 20px;
     text-transform: uppercase;
     font-size: 14px;
+    font-weight: bold;
     border-radius: 0;
     padding: 13px 29px;
     color: #ffffff !important;
@@ -633,8 +634,12 @@ header .dark-mode{
     background-size: 850px;
     background-repeat: no-repeat;
     background-position: 0;
-    transition: background 300ms ease-in-out;
+    transition: background-image 300ms ease-in-out;
     cursor: pointer;
+}
+.slider-item .btn-solid:hover{
+    color: black !important;
+    background-image: linear-gradient(30deg, white 50%, transparent 0%) !important;
 }
 .slider .prev{
     width: 45px;
@@ -973,12 +978,10 @@ img, svg {
     color: var(--theme-deafult);
 } 
 
-
-
-
 .watches-container{
     width: 90%;
     margin: auto;
+    padding-bottom: 65px;
 }
 .watches {
     display: grid;
@@ -989,12 +992,15 @@ img, svg {
 .watch {
     display: flex;
     flex-direction: column;
-    transform: translate(0%,0%) scale(0);
-    transition: transform 0.5s;
-    
+    animation: scaleIn 0.5s forwards;
 }
-.watch.active{
-    transform: translate(0%,0%) scale(1);
+@keyframes scaleIn {
+    0%{
+        scale: 0;
+    }
+    100%{
+        scale: 1;
+    }
 }
 .description-watch {
     margin-top: auto;
@@ -1003,25 +1009,42 @@ img, svg {
     max-width: 100%;
     height: auto;
 }
-.price {
-    margin-top: 10px;
+.watches .star{
+    margin: 5px 0;
+}
+.watches .description-watch .watch-name{
+    font-weight: bold;
+    color: #777777;
+    line-height: 1;
+    margin-bottom: 3px;
+    padding-top: 0;
+    padding-bottom: 5px;
+    transition: all 0.5s ease;
+    font-size: 16px;
+    margin-top: 0;
+}
+.watches .description-watch .price {
+    margin: 5px 0 10px;
     font-size: 18px;
 }
-.price span{
+.watches .description-watch .price span{
     text-decoration: line-through;
     color: #aaa;
     font-size: 14px;
 }
-.colors {
+.watches .description-watch .colors {
     display: flex;
     list-style-type: none;
     padding: 0;
 }
 
-.color {
-    width: 20px;
+.watches .description-watch .colors .color {
+    display: inline-block;
     height: 20px;
-    border-radius: 50%;
-    background-color: #333;
+    width: 20px;
+    border-radius: 100%;
     margin-right: 5px;
+    transition: all 0.1s ease;
+    cursor: pointer;
+    vertical-align: middle;
 }
