@@ -6,6 +6,7 @@
     font-family: Lato-Regular;
     src: url(../font/Lato-Regular.ttf);
 }
+
 *{
     margin: 0;
     padding: 0;
@@ -688,7 +689,7 @@ header .dark-mode{
 
 /*  //////////////////////////////////////////////////Brands\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  */
 
-.list-brands {
+.list-brands, .watches-container2 .watches2 {
     display: flex;
     scroll-snap-type: x mandatory;
     overflow: hidden;
@@ -699,6 +700,10 @@ header .dark-mode{
     margin: 0 5.1rem;
     scroll-snap-align: start;
     scroll-margin-inline: 10.2rem;
+    opacity: 0.5;
+}
+.list-brands .brand:hover{
+    opacity: 1;
 }
 .list-brands .brand .itemImage {
     aspect-ratio: 16/9;
@@ -920,13 +925,13 @@ img, svg {
     margin-bottom: 30px;
     margin-top: -6px;
 }
-.trending-products .title h2{
+.trending-products .title h2,.trending-products2 .title h2{
     padding: 60px 0px 30px 0;
     font-weight: bold;
 }
-.trending-products .line {
+.line-squares {
     position: relative;
-    height: 2px;
+    height: 1px;
     width: 180px;
     background-color: var(--theme-deafult);
     margin: 0 auto;
@@ -934,20 +939,20 @@ img, svg {
     bottom: 0;
     top: 0;
 }
-.trending-products .line:before {
+.line-squares:before {
     left: 64px;
 }
 
-.trending-products .line span:before {
+.line-squares span:before {
     right: 64px;
 }
-.trending-products .line:after {
+.line-squares:after {
     left: 78px;
 }
-.trending-products .line span:after {
+.line-squares span:after {
     right: 78px;
 }
-.trending-products .line:after, .trending-products .line:before {
+.line-squares:after,.line-squares:before {
     position: absolute;
     height: 10px;
     width: 10px;
@@ -956,7 +961,7 @@ img, svg {
     top: -4px;
 }
 
-.trending-products .line span:after, .trending-products .line span:before {
+.line-squares span:after,.line-squares span:before {
     position: absolute;
     height: 10px;
     width: 10px;
@@ -978,21 +983,22 @@ img, svg {
     color: var(--theme-deafult);
 } 
 
-.watches-container{
+.watches-container, .watches-container2{
     width: 90%;
     margin: auto;
     padding-bottom: 65px;
 }
-.watches {
+.watches-container .watches {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
 
-.watch {
+.watches-container .watches .watch {
     display: flex;
     flex-direction: column;
     animation: scaleIn 0.5s forwards;
+    overflow: hidden;
 }
 @keyframes scaleIn {
     0%{
@@ -1002,17 +1008,90 @@ img, svg {
         scale: 1;
     }
 }
-.description-watch {
+.watches-container .watches .watch .description-watch {
     margin-top: auto;
 }
-.watch img{
+.watches-container .watches .watch .imglink img, .watches-container2 .watches2 .watch .imglink img{
     max-width: 100%;
     height: auto;
 }
-.watches .star{
+.watches-container .watches .watch .imglink{
+    position: relative;
+}
+.watches-container .watches .watch .imglink .new{
+    position: absolute;
+    display: flex;
+    top: 7px;
+    left: 7px;
+    background: var(--theme-deafult);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.watches-container .watches .watch .imglink .cart-box{
+    bottom: 0;
+    text-align: right;
+    left: unset;
+    position: absolute;
+    margin: 0 auto;
+    display: inline-block;
+    right: 0;
+    transition: all 0.5s ease;
+}
+.watches-container .watches .watch .imglink .cart-box button{
+    opacity: 0;
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    display: block;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size: 18px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #6f6f6f;
+    transform: translateX(20px);
+    transition: transform 0.5s ease , opacity 0.5s ease;
+}
+
+.watches-container .watches .watch:hover .imglink .cart-box button:nth-child(1){
+    opacity: 1;
+    transform: translateX(0);
+}
+.watches-container .watches .watch:hover .imglink .cart-box button:nth-child(2){
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+}
+.watches-container .watches .watch:hover .imglink .cart-box button:nth-child(3){
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.2s;
+}
+.watches-container .watches .watch:hover .imglink .cart-box button:nth-child(4){
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+}
+.watches-container .watches .watch .imglink .cart-box button:hover{
+    color: var(--theme-deafult);
+    cursor: pointer;
+}
+
+
+
+.watches-container .watches .star{
     margin: 5px 0;
 }
-.watches .description-watch .watch-name{
+.watches-container .watches .description-watch .watch-name{
     font-weight: bold;
     color: #777777;
     line-height: 1;
@@ -1047,4 +1126,186 @@ img, svg {
     transition: all 0.1s ease;
     cursor: pointer;
     vertical-align: middle;
+}
+
+
+
+/* //////////////////////////////////////////////////TRENDING PRODUCTS2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+
+
+.watches-container2 .watches2 .watch {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+    gap: 20px;
+    width: 50%;
+    margin: 0 1.3rem;
+    scroll-snap-align: start;
+    scroll-margin-inline: 2.6rem;
+}
+
+.watches-container2 .watches2 .watch .imglink img{
+    max-width: 100%;
+    height: auto;
+}
+.watches-container2 .watches2 .watch .description-watch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.watches-container2 .watches2 .watch .imglink{
+    position: relative;
+}
+.watches-container2 .watches2 .watch .imglink .new{
+    position: absolute;
+    display: flex;
+    top: 7px;
+    left: 7px;
+    background: var(--theme-deafult);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+.watches-container2 .watches2 .watch .imglink .sale{
+    position: absolute;
+    font-size: 14px;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
+    top: 7px;
+    right: 7px;
+    letter-spacing: 0.1em;
+    z-index: 1;
+    color: #212529;
+    font-family: 'Lato-Regular';
+    font-weight: bold;
+}
+.watches-container2 .watches2 .watch .imglink .cart-box2 {
+    position: absolute;
+    margin: 0 auto;
+    display: inline-block;
+    right: 0;
+    left: 0;
+    border-radius: 50px;
+    width: max-content;
+    padding: 12px 15px;
+    box-shadow: 0 0 12px 0 #dddddd;
+    bottom: 30px;
+    background-color: #ffffff;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+.watches-container2 .watches2 .watch .imglink .cart-box2 button {
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}
+.watches-container2 .watches2 .watch .imglink .cart-box2 i {
+    color: #6f6f6f;
+    font-size: 18px;
+    padding-left: 8px;
+    padding-right: 8px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    cursor: pointer;
+    
+}
+.watches-container2 .watches2 .watch:hover .cart-box2{
+    opacity: 1;
+    transform: translateY(-30px);
+}
+.watches-container2 .watches2 .watch .imglink .cart-box2 i:hover{
+    color: var(--theme-deafult);
+}
+.watches-container2 .watches2 .star{
+    margin: 5px 0;
+}
+.watches-container2 .watches2 .description-watch .watch-name{
+    font-weight: bold;
+    color: #777777;
+    line-height: 1;
+    margin-bottom: 3px;
+    padding-top: 0;
+    padding-bottom: 5px;
+    transition: all 0.5s ease;
+    font-size: 16px;
+    margin-top: 0;
+}
+.watches2 .description-watch .price {
+    margin: 5px 0 10px;
+    font-size: 18px;
+}
+.watches2 .description-watch .price span{
+    text-decoration: line-through;
+    color: #aaa;
+    font-size: 14px;
+}
+.watches2 .description-watch .colors {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+.watches2 .description-watch .colors .color {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    margin-right: 5px;
+    transition: all 0.1s ease;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.trending-products-container2-image{
+    width: 90%;
+    margin: auto;
+}
+.trending-products-container2-image .images{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+
+}
+.trending-products-container2-image .images .image{
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.trending-products-container2-image .image img{
+    width: 100%;
+    height: auto;
+}
+.trending-products-container2-image .image h4{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0;
+    margin-top: -3px;
+    position: absolute;
+    top: calc(50% - 27px);
+    left: 12%;
+    font-family: 'Lato-Regular';
+}
+.trending-products-container2-image .image h2{
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: -7px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 44%;
+    left: 12%;
+    font-family: 'Lato-Regular';
+}
+.trending-products-container2-image .image:hover img{
+    transform: scale(1.05);
 }

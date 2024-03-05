@@ -17,42 +17,42 @@ nextBtn.addEventListener('click', ()=>{
 
 
 const slider = document.querySelector('.list-brands');
-let isDown = false;
-let startX;
-let scrollLeft;
+scrollSliders(slider,830)
+function scrollSliders (element,elementWidth){
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    element.addEventListener('mousedown', (event) => {
+    isDown = true;
+    startX = event.clientX - element.getBoundingClientRect().left;
+    scrollLeft = element.scrollLeft;
+    });
 
+    element.addEventListener('mouseup', () => {
+    isDown = false;
+    });
 
-slider.addEventListener('mousedown', (event) => {
-  isDown = true;
-  startX = event.clientX - slider.getBoundingClientRect().left;
-  scrollLeft = slider.scrollLeft;
-});
+    element.addEventListener('mouseleave', () => {
+    isDown = false;
+    });
 
-slider.addEventListener('mouseup', () => {
-  isDown = false;
-});
+    element.addEventListener('mousemove', (event) => {
+        if (!isDown) return;
+        event.preventDefault();
+        const x = event.clientX - element.getBoundingClientRect().left;
+        const walk = (x - startX) * 4; 
+        let left1 = scrollLeft - walk; 
+        if(left1 < 0){
+            left1 = elementWidth
+        } else if(left1 > elementWidth){
+            left1 = 0
+        } 
+        requestAnimationFrame(() => {
+            element.scrollLeft = left1;
+        })
+    });
 
-slider.addEventListener('mouseleave', () => {
-  isDown = false;
-});
-
-slider.addEventListener('mousemove', (event) => {
-  if (!isDown) return;
-  event.preventDefault();
-  const x = event.clientX - slider.getBoundingClientRect().left;
-  const walk = (x - startX) * 4; 
-  let left1 = scrollLeft - walk; 
-  if(left1 < 0){
-    left1 = 830
-  } else if(left1 > 830){
-    left1 = 0
-  } 
-  requestAnimationFrame(() => {
-      slider.scrollLeft = left1;
-  })
-  console.log(left1);
-});
-
+}
 
 
 
@@ -289,7 +289,22 @@ function createBoxTrendingProducts(image, watchName, PriceAfterDiscount, PriceBe
     const watchContainer = document.createElement('div');
     watchContainer.classList.add('watch');
     watchContainer.innerHTML = 
-        `<a href="#" class="imglink"><img src="${image}" alt="watch"></a>
+        `<a href="#" class="imglink"><img src="${image}" alt="watch">
+        <span class="new">NEW</span>
+        <span class="cart-box">
+            <button title="Add to cart" class="ng-star-inserted">
+                <i class="ti-shopping-cart"></i>
+            </button>
+            <button title="Add to Wishlist">
+                <i class="ti-heart"></i>
+            </button>
+            <button title="Quick View">
+                <i class="ti-search"></i>
+            </button>
+            <button title="Compare">
+                <i class="ti-reload"></i>
+            </button>
+        </span></a>
         <div class="star">
             <i class="fa fa-star" style="color: #edb867;"></i>
             <i class="fa fa-star" style="color: #edb867;"></i>
@@ -299,7 +314,7 @@ function createBoxTrendingProducts(image, watchName, PriceAfterDiscount, PriceBe
         </div>
         <div class="description-watch">
             <a href="#" class="watch-name">${watchName}</a>
-            <h4 class="price">$${PriceAfterDiscount} <span>$${PriceBeforeDiscount}</span></h4>
+            <h4 class="price">${formatPrice(PriceAfterDiscount)} <span>${formatPrice(PriceBeforeDiscount)}</span></h4>
             <ul class="colors">
                 ${colorLiElements}
             </ul>
@@ -325,3 +340,81 @@ function createColorLiElem(colors) {
     });
     return colorLiElements;
 }
+
+function formatPrice (price){
+    let formatted = parseFloat(price).toFixed(2);
+    formatted = formatted.toString().replace('/\B(?=(\d{3})+(?!\d)',',')
+    formatted = '$' + formatted
+    return formatted;
+}
+
+
+ //   //////////////////////////////////////////////TRENDING PRODUCTS2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
+ const watchesContainer2 = $.querySelector('.watches-container2 .watches2');
+ watches.forEach( watch => {
+     createBoxTrendingProducts2(watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage, watch.sale)
+})
+scrollSliders(watchesContainer2,4300);
+function createBoxTrendingProducts2(image, watchName, PriceAfterDiscount, PriceBeforeDiscount, colors, category) {
+    let colorLiElements = createColorLiElem(colors);
+    const watchContainer = document.createElement('div');
+    watchContainer.classList.add('watch');
+    watchContainer.innerHTML = 
+            `<a href="#" class="imglink"><img src="${image}" alt="watch">
+                <span class="new">NEW</span>
+                ${category ? '<span class="sale">ON SALE</span>' : ''}
+                <span class="cart-box2">
+                    <button title="Add to cart" class="ng-star-inserted">
+                        <i class="ti-shopping-cart"></i>
+                    </button>
+                    <button title="Add to Wishlist">
+                        <i class="ti-heart"></i>
+                    </button>
+                    <button title="Quick View">
+                        <i class="ti-search"></i>
+                    </button>
+                    <button title="Compare">
+                        <i class="ti-reload"></i>
+                    </button>
+                </span>
+            </a>
+            <div class="star">
+                <i class="fa fa-star" style="color: #edb867;"></i>
+                <i class="fa fa-star" style="color: #edb867;"></i>
+                <i class="fa fa-star" style="color: #edb867;"></i>
+                <i class="fa fa-star" style="color: #edb867;"></i>
+                <i class="fa fa-star" style="color: #edb867;"></i>
+            </div>
+            <div class="description-watch">
+                <a href="#" class="watch-name">${watchName}</a>
+                <h4 class="price">${formatPrice(PriceAfterDiscount)}  <span>${formatPrice(PriceBeforeDiscount)} </span></h4>
+                <ul class="colors">
+                    ${colorLiElements} 
+                </ul>
+            </div>`;
+            
+            
+            // if(category){
+            //     const imgLink = $.querySelector('.watches-container2 .watches2 .watch .imglink');
+            //     const spanElem = $.createElement('span');
+            //     spanElem.classList.add('sale') 
+            //     spanElem.innerHTML = 'ON SALE'
+            //     imgLink.append(spanElem)
+            //     // console.log(imgLink);
+            // }
+        watchesContainer2.appendChild(watchContainer);
+        
+        const colorLiItems = watchContainer.querySelectorAll('.colors li');
+        colorLiItems.forEach((li, index) => {
+            li.addEventListener('click', () => {
+                const selectedImage = colors[index].image;
+                const imgElement = watchContainer.querySelector('img');
+                imgElement.src = selectedImage;
+            });
+        });
+}
+
+
+
+
+
