@@ -1,6 +1,25 @@
+let $ = document
+//    //////////////////////////////////////////////////Tap Top\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+let scrollToTop = $.querySelector('.tap-top');
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 600) {
+        scrollToTop.style.display = "block"
+    } else {
+        scrollToTop.style.display = "none"
+    }
+});
+
+scrollToTop.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0 ,
+        behavior: 'smooth'
+    });
+});
+
+
 //    //////////////////////////////////////////////////Photo Slider\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-let $ = document
 const sliderImgElem = $.querySelectorAll('.slider-item');
 const prevBtn = $.querySelector('.prev')
 const nextBtn = $.querySelector('.next')
@@ -48,12 +67,20 @@ function scrollSliders (element,elementWidth){
             left1 = 0
         } 
         requestAnimationFrame(() => {
-            element.scrollLeft = left1;
+            // element.scrollLeft = left1;
+            element.scrollTo({
+                left:left1,
+                behavior: 'smooth'
+            })
         })
     });
 
 }
 
+//    ////////////////////////////////////////////Introducing Watches\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    const introducingWatches = $.querySelector('.introducing-watches')
+    scrollSliders(introducingWatches,1260)
 
 
  //   //////////////////////////////////////////////TRENDING PRODUCTS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
@@ -393,15 +420,6 @@ function createBoxTrendingProducts2(image, watchName, PriceAfterDiscount, PriceB
                 </ul>
             </div>`;
             
-            
-            // if(category){
-            //     const imgLink = $.querySelector('.watches-container2 .watches2 .watch .imglink');
-            //     const spanElem = $.createElement('span');
-            //     spanElem.classList.add('sale') 
-            //     spanElem.innerHTML = 'ON SALE'
-            //     imgLink.append(spanElem)
-            //     // console.log(imgLink);
-            // }
         watchesContainer2.appendChild(watchContainer);
         
         const colorLiItems = watchContainer.querySelectorAll('.colors li');
@@ -416,5 +434,82 @@ function createBoxTrendingProducts2(image, watchName, PriceAfterDiscount, PriceB
 
 
 
+ //   //////////////////////////////////////////////Special Products\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
+const watchesContainer3 = $.querySelector('.spacial-products .watches3')
+function createBoxSpecialProducts (indexwatch, image, watchName, PriceAfterDiscount, PriceBeforeDiscount, colors){
+    let colorLiElements = createColorLiElem(colors);
+    const watchContainer = document.createElement('div');
+    watchContainer.classList.add('watch');
+    if(indexwatch == 1){
+        watchContainer.classList.add('watch1');
+    }else if(indexwatch == 2){
+        watchContainer.classList.add('watch2');
+    }else if(indexwatch == 3){
+        watchContainer.classList.add('watch3');
+    }else if(indexwatch == 4){
+        watchContainer.classList.add('watch4');
+    }else if(indexwatch == 5){
+        watchContainer.classList.add('watch5');
+    }
+    watchContainer.innerHTML = 
+            `<a href="#" class="imglink"><img src="${image}" alt="watch">
+            ${indexwatch == 5 ? '<span class="new">NEW</span>' : ''}
+            ${indexwatch == 5 ? '<span class="sale">ON SALE</span>' : ''}
+            ${indexwatch == 5 ? `<span class="cart-box2">
+                                <button title="Add to cart" class="ng-star-inserted">
+                                    <i class="ti-shopping-cart"></i>
+                                </button>
+                                <button title="Add to Wishlist">
+                                    <i class="ti-heart"></i>
+                                </button>
+                                <button title="Quick View">
+                                    <i class="ti-search"></i>
+                                </button>
+                                <button title="Compare">
+                                    <i class="ti-reload"></i>
+                                </button>
+                            </span>` : ''}
+            </a>
+            <div class="description-watch ${indexwatch == 5 ? 'description-watch5' : ''}">
+                <div class="star">
+                    <i class="fa fa-star" style="color: #edb867;"></i>
+                    <i class="fa fa-star" style="color: #edb867;"></i>
+                    <i class="fa fa-star" style="color: #edb867;"></i>
+                    <i class="fa fa-star" style="color: #edb867;"></i>
+                    <i class="fa fa-star" style="color: #edb867;"></i>
+                </div>
+                <a href="#" class="watch-name">${watchName}</a>
+                <h4 class="price">${formatPrice(PriceAfterDiscount)}
+                ${indexwatch == 5 ? `<span>${formatPrice(PriceBeforeDiscount)} </span>` : ''}
+                </h4>
+                <ul class="colors">
+                    ${colorLiElements}
+                </ul>
+            </div>`;
+            
+        watchesContainer3.appendChild(watchContainer);
+        
+        const colorLiItems = watchContainer.querySelectorAll('.colors li');
+        colorLiItems.forEach((li, index) => {
+            li.addEventListener('click', () => {
+                const selectedImage = colors[index].image;
+                const imgElement = watchContainer.querySelector('img');
+                imgElement.src = selectedImage;
+            });
+        });
+}
 
 
+for(let i = 0 ; i < watches.slice(0, 5).length ; i++){
+    const currentWatch = watches[i];
+    if (currentWatch && currentWatch.colorImage) {
+        for(let j = 0 ; j < currentWatch.colorImage.length ; j++){
+            createBoxSpecialProducts(i+1, currentWatch.colorImage[j]?.image , currentWatch.watchName , currentWatch.PriceAfterDiscount , currentWatch.PriceBeforeDiscount , currentWatch.colorImage)
+        }
+    }
+}
+
+ //   //////////////////////////////////////////////Recent Story\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
+
+const recentStoryContainer = $.querySelector('.recents')
+ scrollSliders(recentStoryContainer,500);
