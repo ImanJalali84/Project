@@ -33,10 +33,39 @@
                     </div>
                     <div class="my-account">
                         <i class="fa fa-user"></i>My Account
+                        <ul>
+                            <li>Login</li>
+                            <li>Logout</li>
+                        </ul>
                     </div>
                 </div>
            </div>
         </div>
+    </div>
+    <div class="mobile-fix-option">
+        <div class="search-btn-mobile">
+            <i class="ti-search"></i>
+        </div>
+        <div class="modal-search-container">
+            <div class="modal-search">
+                <div class="close-modal">
+                    <span title="Close Overlay" class="closebtn">×</span>
+                </div>
+                <div class="overlay-content">
+                    <form class="ng-untouched ng-pristine ng-valid">
+                        <div class="form-group">
+                            <input type="text" id="exampleInputPassword1" placeholder="Search a Product" class="form-control">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <i class="ti-heart"></i>
+        <div>
+            <i class="ti-shopping-cart"></i>
+        </div>
+        <i class="ti-user"></i>
+        <i class="ti-settings"></i>
     </div>
     <div class="header-down">
         <div class="container">
@@ -44,6 +73,9 @@
                 <div class="menu-left">
                     <i class="fa fa-bars"></i>
                     <a href="#"><img src="../image/logo.png" alt="logo"></a>
+                    <div class="icon-menu-bar">
+                        <i class="fa fa-bars"></i>
+                    </div>
                 </div>
                 <div class="menu-right">
                     <div class="link-menu">
@@ -53,7 +85,7 @@
                                 <span class="sub-arrow"></span>
                             </div>
                             <ul class="choose">
-                                <li href="#">
+                                <li>
                                      Clothing  
                                     <span class="sub-arrow ng-star-inserted"></span>
                                     <ul class="choose-second">
@@ -220,13 +252,50 @@
                         </div>
                     </div>
                     <div class="icon-menu">
-                        <img src="../image/icon/search.png" alt="search icon">
-                        <img src="../image/icon/setting.png" alt="setting icon">
-                        <img src="../image/icon/cart.png" alt="cart icon">
+                        <div class="icon-menu-bar">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <div class="search_btn">
+                            <img src="../image/icon/search.png" alt="search icon">
+                        </div>
+                        <div class="modal-search-container">
+                            <div class="modal-search">
+                                <div class="close-modal">
+                                    <span title="Close Overlay" class="closebtn">×</span>
+                                </div>
+                                <div class="overlay-content">
+                                    <form class="ng-untouched ng-pristine ng-valid">
+                                        <div class="form-group">
+                                            <input type="text" id="exampleInputPassword1" placeholder="Search a Product" class="form-control">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="setting-image">
+                            <img src="../image/icon/setting.png" alt="setting icon">
+                            <div class="show-div">
+                                <h6>language</h6>
+                                <ul>
+                                    <li class="ng-star-inserted"><a href="#">English</a></li>
+                                    <li class="ng-star-inserted"><a href="#">French</a></li>
+                                </ul>
+                                <h6>currency</h6>
+                                <ul class="list-inline">
+                                    <li class="ng-star-inserted"><a href="#">Euro</a></li>
+                                    <li class="ng-star-inserted"><a href="#">Rupees</a></li>
+                                    <li class="ng-star-inserted"><a href="#">Pound</a></li>
+                                    <li class="ng-star-inserted"><a href="#">Dollar</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="cart-btn">
+                            <img src="../image/icon/cart.png" alt="cart icon">
+                            <ul class="shopping-cart ng-star-inserted">
+                                <h5>Your cart is currently empty.</h5>
+                            </ul>
+                        </div>
                         <span class="count-products-purchased">0</span>
-                        <!-- <i class="fa fa-search"></i>
-                        <i class="fa fa-cog"></i>
-                        <i class="fa fa-shopping-basket"></i> -->
                     </div>
                 </div>
             </div>
@@ -672,10 +741,112 @@
                 </div>
             </div>
         </div>
+
+        <div class="footer-about-container">
+            <div class="about-container">
+                <div class="abouts">
+                    <div class="about">
+                        <div class="footer-title footer-mobile-title">
+                            <h4>about</h4>
+                        </div>
+                        <div class="footer-content">
+                            <div class="image-logo"><img src="../image/logo.png" alt="logo"></div>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                            <div class="social-media-div">
+                                <ul class="social-media-ul">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="about about2">
+                            <div class="footer-title">
+                                <h4>CATEGORIES</h4>
+                            </div>
+                            <div class="footer-content">
+                                <div class="content">
+                                    <ul class="choose">
+                                        <li><a href="#">Womens Fashion</a></li>
+                                        <li><a href="#">Mens Fashion</a></li>
+                                        <li><a href="#">Kids Fashion</a></li>
+                                        <li><a href="#">Featured</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about about2">
+                            <div class="footer-title">
+                                <h4>WHY WE CHOOSE</h4>
+                            </div>
+                            <div class="footer-content">
+                                <div class="content">
+                                    <ul class="choose">
+                                        <li><a href="#">Shipping & Return</a></li>
+                                        <li><a href="#">Secure Shopping</a></li>
+                                        <li><a href="#">Gallary</a></li>
+                                        <li><a href="#">Affiliates</a></li>
+                                        <li><a href="#">Contacts</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about about2">
+                            <div class="footer-title">
+                                <h4>STORE INFORMATION</h4>
+                            </div>
+                            <div class="footer-content">
+                                <div class="content">
+                                    <ul class="communication">
+                                        <li><i class="fa fa-map-marker"></i>
+                                            Multikart Demo Store, Demo Store India 345-659
+                                        </li>
+                                        <li><i class="fa fa-phone"></i>
+                                            Call Us: 123-456-7898
+                                        </li>
+                                        <li><i class="fa fa-envelope-o"></i>
+                                            Email Us: <a href="#">Support@Fiot.Com</a>
+                                        </li>
+                                        <li><i class="fa fa-fax"></i>
+                                            Fax: 123456
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sub-footer-container">
+            <div class="sub-footer">
+                <div class="sub">
+                    <div class="footer-end">
+                        <p><i class="fa fa-copyright"></i>   2024 theme forest powered by pixelstrap</p>
+                    </div>
+                </div>
+                <div class="sub">
+                    <div class="payment-card-bottom">
+                        <ul>
+                            <li><a><img src="../image/visa.png" alt=""></a></li>
+                            <li><a><img src="../image/mastercard.png" alt=""></a></li>
+                            <li><a><img src="../image/paypal.png" alt=""></a></li>
+                            <li><a><img src="../image/american-express.png" alt=""></a></li>
+                            <li><a><img src="../image/discover.png" alt=""></a></li></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </footer>
 
 
-    <br><br><br><br><br><br><br><br><br><br>
 
     <script src="../js/page1.js"></script>
 </body>
