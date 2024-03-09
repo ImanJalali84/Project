@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Page</title>
+</head>
+<body>
+
+<div class="product">
+    <h2>محصول یک</h2>
+    <button onclick="addToCart('محصول یک')">اضافه به سبد خرید</button>
+</div>
+
+<script>
+function addToCart(productName) {
+    // اطلاعات محصول را به localStorage اضافه کنید
+    var cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+    cartItems.push(productName);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
+</script>
+
+</body>
+</html>

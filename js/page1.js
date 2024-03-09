@@ -56,7 +56,7 @@ nextBtn.addEventListener('click', ()=>{
 
 
 const slider = document.querySelector('.list-brands');
-scrollSliders(slider,830)
+scrollSliders(slider,5000)
 function scrollSliders (element,elementWidth){
     let isDown = false;
     let startX;
@@ -100,7 +100,7 @@ function scrollSliders (element,elementWidth){
 //    ////////////////////////////////////////////Introducing Watches\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     const introducingWatches = $.querySelector('.introducing-watches')
-    scrollSliders(introducingWatches,1260)
+    scrollSliders(introducingWatches,3260)
 
 
  //   //////////////////////////////////////////////TRENDING PRODUCTS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
@@ -416,7 +416,7 @@ function formatPrice (price){
  watches.forEach( watch => {
      createBoxTrendingProducts2(watch.id,watch.colorImage[0].image,watch.watchName,watch.PriceAfterDiscount,watch.PriceBeforeDiscount,watch.colorImage, watch.sale)
 })
-scrollSliders(watchesContainer2,4300);
+scrollSliders(watchesContainer2,5300);
 function createBoxTrendingProducts2(id,image, watchName, PriceAfterDiscount, PriceBeforeDiscount, colors, category) {
     let colorLiElements = createColorLiElem(colors);
     const watchContainer = document.createElement('div');
@@ -547,16 +547,25 @@ for(let i = 0 ; i < watches.slice(0, 5).length ; i++){
  //   //////////////////////////////////////////////Recent Story\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  
 
 const recentStoryContainer = $.querySelector('.recents')
- scrollSliders(recentStoryContainer,500);
+ scrollSliders(recentStoryContainer,900);
 
 
 
 //    //////////////////////////////////////////////////Cart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-const cartItems = $.querySelector('.shopping-cart')
+const addCartBtn = $.querySelectorAll('.ng-star-inserted')
+const cartItems = $.querySelectorAll('.shopping-cart')
 const countProductsElem = $.querySelector('.header-down .container .menu .menu-right .icon-menu .count-products-purchased')
+const countProductsMobileElem = $.querySelector('.mobile-fix-option .cart-btn .count-products-purchased')
+const checkOut = $.querySelector('.menu .menu-right .icon-menu .shopping-cart li .buttons .checkout')
 let userBasket = []
-let countProducts = 0
+
+
+addCartBtn.forEach(btn => {
+    btn.addEventListener('click', event => {
+        event.preventDefault()
+    })
+})
 
 function addMenuToBasketArray(watchId) {
     console.log(watchId);
@@ -573,55 +582,83 @@ function addMenuToBasketArray(watchId) {
         let mainMenu = watches.find(function(watch) {
             return watch.id === watchId;
         });
-        countProducts++
-        countProductsElem.innerHTML = countProducts
+
+        countProductsElem.innerHTML = userBasket.length
+        countProductsMobileElem.innerHTML = userBasket.length
         mainMenu.count = 1;
         userBasket.push(mainMenu);
     }
     
-    basketMenusGenerator(userBasket);
+    setLocalStorage(userBasket)
+    getLocalStorage(userBasket)
     calcTotalPrice(userBasket)
 }
 function basketMenusGenerator(userBasketArray){
-    if(countProducts){
-    cartItems.innerHTML = ''
-    userBasketArray.forEach(function(watch){
-        cartItems.insertAdjacentHTML('beforeend', `<li class="ng-star-inserted">
-                <div class="media">
-                    <a href="#"><img class="me-3" src="${watch.colorImage[0].image}" alt="silver"></a>
-                    <div class="media-body">
-                        <a href="#"><h4>${watch.watchName}</h4></a>
-                        <h4 ><span> ${watch.count} x ${formatPrice(watch.PriceAfterDiscount)} </span></h4>
+    cartItems.forEach(cartItem => {
+        if(userBasketArray.length){
+            cartItem.innerHTML = ''
+            userBasketArray.forEach(function(watch){
+                cartItem.insertAdjacentHTML('beforeend', `<li class="ng-star-inserted">
+                        <div class="media">
+                            <a href="#"><img class="me-3" src="${watch.colorImage[0].image}" alt="silver"></a>
+                            <div class="media-body">
+                                <a href="#"><h4>${watch.watchName}</h4></a>
+                                <h4 ><span> ${watch.count} x ${formatPrice(watch.PriceAfterDiscount)} </span></h4>
+                            </div>
+                        </div>
+                        <div class="close-circle" onclick="removeMenuFromBasket(${watch.id})"><a href="#"><i class="fa fa-times"></i></a></div>
+                    </li>`)
+                    })
+                    cartItem.insertAdjacentHTML('beforeend',`<li>
+                    <div class="total">
+                        <h5>subtotal : <span>$00.00</span></h5>
                     </div>
-                </div>
-                <div class="close-circle" onclick="removeMenuFromBasket(${watch.id})"><a href="#"><i class="fa fa-times"></i></a></div>
-            </li>`)
-            })
-            cartItems.insertAdjacentHTML('beforeend',`<li>
-            <div class="total">
-                <h5>subtotal : <span>$00.00</span></h5>
-            </div>
-        </li>
-        <li>
-            <div class="buttons">
-                <a class="view-cart" href="#">view cart</a>
-                <a class="checkout" href="#">checkout</a></div>
-        </li>`)}else{
-        cartItems.innerHTML = ''
-        cartItems.insertAdjacentHTML('beforeend','<h5>Your cart is currently empty.</h5>')
-    }
+                </li>
+                <li>
+                    <div class="buttons">
+                        <a class="view-cart" href="#">view cart</a>
+                        <a class="checkout" href="#" onclick="removeAllCart()">checkout</a></div>
+                </li>`)}else{
+                cartItem.innerHTML = ''
+                cartItem.insertAdjacentHTML('beforeend','<h5>Your cart is currently empty.</h5>')
+            }
+    })
 }
 
 function removeMenuFromBasket (watchID){
+    let localStorageWatches = JSON.parse(localStorage.getItem('cart'));
+    userBasket = localStorageWatches;
     userBasket = userBasket.filter(function(watch){
         return watch.id !== watchID
     })
-    countProducts--
-    countProductsElem.innerHTML = countProducts
+    countProductsElem.innerHTML = userBasket.length
+    countProductsMobileElem.innerHTML = userBasket.length
+    setLocalStorage(userBasket)
     basketMenusGenerator(userBasket)
     calcTotalPrice(userBasket)
 }
 
+function setLocalStorage(selectedWatches){
+    localStorage.setItem('cart', JSON.stringify(selectedWatches))
+}
+function getLocalStorage(){
+    let localStorageWatches = JSON.parse(localStorage.getItem('cart'))
+    if(localStorageWatches){
+        userBasket = localStorageWatches
+    } else {
+        userBasket = []
+    }
+    countProductsElem.innerHTML = userBasket.length
+    countProductsMobileElem.innerHTML = userBasket.length
+    basketMenusGenerator(userBasket)
+    calcTotalPrice(userBasket)
+}
+
+function removeAllCart(){
+    userBasket = []
+    localStorage.removeItem('cart')
+    getLocalStorage(userBasket)
+}
 
 
 function calcTotalPrice(userBasketArray) {
@@ -630,11 +667,13 @@ function calcTotalPrice(userBasketArray) {
         totalPriceValue += watch.PriceAfterDiscount * watch.count;
     });
 
-    const cartTotalPriceElem = $.querySelector('.total h5 span');
-    if (cartTotalPriceElem) {
-        cartTotalPriceElem.innerHTML = formatPrice(totalPriceValue);
-        console.log(cartTotalPriceElem);
-    }
+    const cartTotalPriceElem = $.querySelectorAll('.total h5 span');
+    cartTotalPriceElem.forEach(price => {
+        if (price) {
+            price.innerHTML = formatPrice(totalPriceValue);
+            console.log(price);
+        }
+    })
 }
 function updateCount (watchID,newCount){
     userBasket.forEach(function(watch){
@@ -647,3 +686,16 @@ function updateCount (watchID,newCount){
     })
     calcTotalPrice(userBasket)
 }
+window.addEventListener('load', getLocalStorage)
+
+
+
+const navBarBtn = $.querySelector('.header-down .container .menu .menu-right .icon-menu .icon-menu-bar i')
+const closeNavBarBtn = $.querySelector('.header-down .container .menu .menu-right .link-menu .back-btn')
+const navBar = $.querySelector('.menu .menu-right .link-menu')
+navBarBtn.addEventListener('click', () => {
+    navBar.style.right = 0
+})
+closeNavBarBtn.addEventListener('click', () => {
+    navBar.style.right = -300 + 'px'
+})
