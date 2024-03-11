@@ -357,13 +357,13 @@ function createBoxTrendingProducts(id,image, watchName, PriceAfterDiscount, Pric
             <button title="Add to cart" class="ng-star-inserted"  onclick="addMenuToBasketArray(${id})">
                 <i class="ti-shopping-cart"></i>
             </button>
-            <button title="Add to Wishlist">
+            <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
                 <i class="ti-heart"></i>
             </button>
             <button title="Quick View">
                 <i class="ti-search"></i>
             </button>
-            <button title="Compare">
+            <button title="Compare" onclick="addWatchToCompareList(event, ${id})">
                 <i class="ti-reload"></i>
             </button>
         </span></a>
@@ -429,13 +429,13 @@ function createBoxTrendingProducts2(id,image, watchName, PriceAfterDiscount, Pri
                     <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(${id})">
                         <i class="ti-shopping-cart"></i>
                     </button>
-                    <button title="Add to Wishlist">
+                    <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
                         <i class="ti-heart"></i>
                     </button>
                     <button title="Quick View">
                         <i class="ti-search"></i>
                     </button>
-                    <button title="Compare">
+                    <button title="Compare" onclick="addWatchToCompareList(event, ${id})">
                         <i class="ti-reload"></i>
                     </button>
                 </span>
@@ -494,13 +494,13 @@ function createBoxSpecialProducts (id,indexwatch, image, watchName, PriceAfterDi
                                 <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(${id})">
                                     <i class="ti-shopping-cart"></i>
                                 </button>
-                                <button title="Add to Wishlist">
+                                <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
                                     <i class="ti-heart"></i>
                                 </button>
                                 <button title="Quick View">
                                     <i class="ti-search"></i>
                                 </button>
-                                <button title="Compare">
+                                <button title="Compare" onclick="addWatchToCompareList(event, ${id})">
                                     <i class="ti-reload"></i>
                                 </button>
                             </span>` : ''}
@@ -568,7 +568,6 @@ addCartBtn.forEach(btn => {
 })
 
 function addMenuToBasketArray(watchId) {
-    console.log(watchId);
     let menuExists = false;
 
     userBasket.forEach(function(watch) {
@@ -616,8 +615,8 @@ function basketMenusGenerator(userBasketArray){
                 </li>
                 <li>
                     <div class="buttons">
-                        <a class="view-cart" href="#">view cart</a>
-                        <a class="checkout" href="#" onclick="removeAllCart()">checkout</a></div>
+                        <a class="view-cart" href="cartpage.html">view cart</a>
+                        <a class="checkout" href="" onclick="removeAllCart()">checkout</a></div>
                 </li>`)}else{
                 cartItem.innerHTML = ''
                 cartItem.insertAdjacentHTML('beforeend','<h5>Your cart is currently empty.</h5>')
@@ -671,7 +670,6 @@ function calcTotalPrice(userBasketArray) {
     cartTotalPriceElem.forEach(price => {
         if (price) {
             price.innerHTML = formatPrice(totalPriceValue);
-            console.log(price);
         }
     })
 }
@@ -686,6 +684,69 @@ function updateCount (watchID,newCount){
     })
     calcTotalPrice(userBasket)
 }
+
+
+//    //////////////////////////////////////////////////Compare\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+let compareList = []
+
+function addWatchToCompareList(event, watchId){
+    event.preventDefault();
+    let compareExists = false;
+
+    compareList.forEach(function(watch) {
+        if (watch.id === watchId) {
+            compareExists = true;
+        }
+    });
+
+    if (!compareExists) {
+        let compare = watches.find(function(watch) {
+            return watch.id === watchId;
+        });
+
+        compareList.push(compare);
+    }
+    
+    setLocalStorageCompare(compareList)
+}
+function setLocalStorageCompare(selectedWatches){
+    localStorage.setItem('compare', JSON.stringify(selectedWatches))
+}
+//    //////////////////////////////////////////////////Wishlist\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+const addWishlistBtn = $.querySelectorAll('.wish-btn')
+let Wishlist = []
+
+
+addWishlistBtn.forEach(btn => {
+    btn.addEventListener('click', event => {
+        event.preventDefault()
+    })
+})
+function addWatchToWishlist(watchId){
+    let wishExists = false;
+
+    Wishlist.forEach(function(watch) {
+        if (watch.id === watchId) {
+            wishExists = true;
+        }
+    });
+
+    if (!wishExists) {
+        let wish = watches.find(function(watch) {
+            return watch.id === watchId;
+        });
+
+        Wishlist.push(wish);
+    }
+    
+    setLocalStorageWish(Wishlist)
+}
+function setLocalStorageWish(selectedWatches){
+    localStorage.setItem('wishlist', JSON.stringify(selectedWatches))
+}
+
+
+
 window.addEventListener('load', getLocalStorage)
 
 
