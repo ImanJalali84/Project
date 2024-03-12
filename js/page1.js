@@ -351,13 +351,13 @@ function createBoxTrendingProducts(id,image, watchName, PriceAfterDiscount, Pric
     const watchContainer = document.createElement('div');
     watchContainer.classList.add('watch');
     watchContainer.innerHTML = 
-        `<a href="#" class="imglink"><img src="${image}" alt="watch">
+        `<a href="watch.html?watch=${id}" class="imglink"><img src="${image}" alt="watch">
         <span class="new">NEW</span>
         <span class="cart-box">
-            <button title="Add to cart" class="ng-star-inserted"  onclick="addMenuToBasketArray(${id})">
+            <button title="Add to cart" class="ng-star-inserted"  onclick="addMenuToBasketArray(event, ${id})">
                 <i class="ti-shopping-cart"></i>
             </button>
-            <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
+            <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(event, ${id})">
                 <i class="ti-heart"></i>
             </button>
             <button title="Quick View">
@@ -375,7 +375,7 @@ function createBoxTrendingProducts(id,image, watchName, PriceAfterDiscount, Pric
             <i class="fa fa-star" style="color: #edb867;"></i>
         </div>
         <div class="description-watch">
-            <a href="#" class="watch-name">${watchName}</a>
+            <a href="watch.html?watch=${id}" class="watch-name">${watchName}</a>
             <h4 class="price">${formatPrice(PriceAfterDiscount)} <span>${formatPrice(PriceBeforeDiscount)}</span></h4>
             <ul class="colors">
                 ${colorLiElements}
@@ -422,14 +422,14 @@ function createBoxTrendingProducts2(id,image, watchName, PriceAfterDiscount, Pri
     const watchContainer = document.createElement('div');
     watchContainer.classList.add('watch');
     watchContainer.innerHTML = 
-            `<a href="#" class="imglink"><img src="${image}" alt="watch">
+            `<a href="watch.html?watch=${id}" class="imglink"><img src="${image}" alt="watch">
                 <span class="new">NEW</span>
                 ${category ? '<span class="sale">ON SALE</span>' : ''}
                 <span class="cart-box2">
-                    <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(${id})">
+                    <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(event, ${id})">
                         <i class="ti-shopping-cart"></i>
                     </button>
-                    <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
+                    <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(event, ${id})">
                         <i class="ti-heart"></i>
                     </button>
                     <button title="Quick View">
@@ -448,7 +448,7 @@ function createBoxTrendingProducts2(id,image, watchName, PriceAfterDiscount, Pri
                 <i class="fa fa-star" style="color: #edb867;"></i>
             </div>
             <div class="description-watch">
-                <a href="#" class="watch-name">${watchName}</a>
+                <a href="watch.html?watch=${id}" class="watch-name">${watchName}</a>
                 <h4 class="price">${formatPrice(PriceAfterDiscount)}  <span>${formatPrice(PriceBeforeDiscount)} </span></h4>
                 <ul class="colors">
                     ${colorLiElements} 
@@ -487,14 +487,14 @@ function createBoxSpecialProducts (id,indexwatch, image, watchName, PriceAfterDi
         watchContainer.classList.add('watch5');
     }
     watchContainer.innerHTML = 
-            `<a href="#" class="imglink"><img src="${image}" alt="watch">
+            `<a href="watch.html?watch=${id}" class="imglink"><img src="${image}" alt="watch">
             ${indexwatch == 5 ? '<span class="new">NEW</span>' : ''}
             ${indexwatch == 5 ? '<span class="sale">ON SALE</span>' : ''}
             ${indexwatch == 5 ? `<span class="cart-box2">
-                                <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(${id})">
+                                <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(event, ${id})">
                                     <i class="ti-shopping-cart"></i>
                                 </button>
-                                <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(${id})">
+                                <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(event, ${id})">
                                     <i class="ti-heart"></i>
                                 </button>
                                 <button title="Quick View">
@@ -513,7 +513,7 @@ function createBoxSpecialProducts (id,indexwatch, image, watchName, PriceAfterDi
                     <i class="fa fa-star" style="color: #edb867;"></i>
                     <i class="fa fa-star" style="color: #edb867;"></i>
                 </div>
-                <a href="#" class="watch-name">${watchName}</a>
+                <a href="watch.html?watch=${id}" class="watch-name">${watchName}</a>
                 <h4 class="price">${formatPrice(PriceAfterDiscount)}
                 ${indexwatch == 5 ? `<span>${formatPrice(PriceBeforeDiscount)} </span>` : ''}
                 </h4>
@@ -553,7 +553,6 @@ const recentStoryContainer = $.querySelector('.recents')
 
 //    //////////////////////////////////////////////////Cart\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-const addCartBtn = $.querySelectorAll('.ng-star-inserted')
 const cartItems = $.querySelectorAll('.shopping-cart')
 const countProductsElem = $.querySelector('.header-down .container .menu .menu-right .icon-menu .count-products-purchased')
 const countProductsMobileElem = $.querySelector('.mobile-fix-option .cart-btn .count-products-purchased')
@@ -561,13 +560,10 @@ const checkOut = $.querySelector('.menu .menu-right .icon-menu .shopping-cart li
 let userBasket = []
 
 
-addCartBtn.forEach(btn => {
-    btn.addEventListener('click', event => {
-        event.preventDefault()
-    })
-})
 
-function addMenuToBasketArray(watchId) {
+
+function addMenuToBasketArray(event, watchId) {
+    event.preventDefault();
     let menuExists = false;
 
     userBasket.forEach(function(watch) {
@@ -713,16 +709,11 @@ function setLocalStorageCompare(selectedWatches){
     localStorage.setItem('compare', JSON.stringify(selectedWatches))
 }
 //    //////////////////////////////////////////////////Wishlist\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-const addWishlistBtn = $.querySelectorAll('.wish-btn')
 let Wishlist = []
 
 
-addWishlistBtn.forEach(btn => {
-    btn.addEventListener('click', event => {
-        event.preventDefault()
-    })
-})
-function addWatchToWishlist(watchId){
+function addWatchToWishlist(event,watchId){
+    event.preventDefault();
     let wishExists = false;
 
     Wishlist.forEach(function(watch) {
