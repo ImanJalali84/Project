@@ -362,11 +362,168 @@ window.addEventListener('load', getLocalStorage)
 
 
 //    //////////////////////////////////////////////////Body Page\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-const locationPageH2Elem = $.querySelector(".breadcrumb-section .page-title h2")
+const locationPageH2Elem = $.querySelector(".breadcrumb-section .page-title h2");
+const watchName = $.querySelector('.watch-specifications h2');
+const PriceBeforeDiscount = $.querySelector('.watch-specifications h4 del');
+const PriceAfterDiscount = $.querySelector('.watch-specifications h3');
+const discountPercent = $.querySelector('.watch-specifications h4 span');
+const colorsUlElem = $.querySelector('.watch-specifications .color-variant');
+let imgElement = $.querySelector('.section-page .container-section .big-image img');
+const lowBtn = $.querySelector('.qty-box .input-group span button.quantity-left-minus');
+const inputElement = document.querySelector(`input[name="quantity"]`);
+const addBtn = $.querySelector('.qty-box .input-group span button.quantity-right-plus');
+const imagesUlElem = $.querySelector('.section-page .container-section .more-imag ul');
+const addToCartBtn = $.querySelector('.watch-specifications .product-buttons .btn-solid:nth-child(1)');
+const addToWishlistBtn = $.querySelector('.watch-specifications .product-icon .wishlist-btn');
 
-let locationPage = new URLSearchParams(location.search)
-let mainProductName = locationPage.get('watch')
-locationPageH2Elem.innerHTML = 'WATCH ' + mainProductName
+
+let locationPage = new URLSearchParams(location.search);
+let mainProductNumber = locationPage.get('watch');
+locationPageH2Elem.innerHTML = 'WATCH ' + mainProductNumber;
+let mainProductObject = watches.find( watch => {
+    return watch.id === Number(mainProductNumber);
+})
+if(mainProductObject){
+    let colorLiElements = createColorLiElem(mainProductObject.colorImage);
+    let imageLiElements = createImageLiElem(mainProductObject.colorImage);
+    watchName.innerHTML = mainProductObject.watchName;
+    PriceBeforeDiscount.innerHTML = formatPrice(mainProductObject.PriceBeforeDiscount) ;
+    PriceAfterDiscount.innerHTML = formatPrice(mainProductObject.PriceAfterDiscount) ;
+    discountPercent.innerHTML = Math.round(( (mainProductObject.PriceBeforeDiscount - mainProductObject.PriceAfterDiscount) / mainProductObject.PriceBeforeDiscount ) * 100) + '% Off'; 
+    colorsUlElem.innerHTML = colorLiElements
+    imagesUlElem.innerHTML = imageLiElements
+    imgElement.setAttribute('src',mainProductObject.colorImage[0].image)
+}
+
+
+function createColorLiElem(colors) {
+    let colorLiElements = "";
+    colors.forEach(colorObj => {
+        colorLiElements += `<li class="ng-star-inserted" style="background-color: ${colorObj.color};"></li>`;
+    });
+    return colorLiElements;
+}
+const colorLiItems = $.querySelectorAll('.watch-specifications .color-variant li');
+let selectedImage = null;
+colorLiItems[0].classList.add('active')
+colorLiItems.forEach((li, index) => {
+    li.addEventListener('click', () => {
+        selectedImage = mainProductObject.colorImage[index].image;
+        imgElement.src = selectedImage;
+        colorLiItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        li.classList.add('active');
+        imageLiItems[index].classList.add('active');
+        imageLiItems.forEach((item, i) => {
+            if (i !== index) {
+                item.classList.remove('active');
+            }
+        });
+    });
+});
+
+addBtn.addEventListener('click', () => {
+    let currentValue = parseInt(inputElement.value);
+    currentValue++;
+    inputElement.value = currentValue;
+})
+lowBtn.addEventListener('click', () => {
+    if (inputElement.value > 0) {
+        let currentValue = parseInt(inputElement.value);
+        currentValue--;
+        inputElement.value = currentValue;
+    }else{
+        inputElement.value = 0
+    }
+})
+
+function createImageLiElem(images) {
+    let imageLiElements = "";
+    images.forEach(imageObj => {
+        imageLiElements += `<li><img src="${imageObj.image}" alt="watch"></li>`;
+    });
+    return imageLiElements;
+}
+const imageLiItems = $.querySelectorAll('.section-page .container-section .more-imag ul li');
+let selectedImageLi = null;
+imageLiItems[0].classList.add('active')
+imageLiItems.forEach((li, index) => {
+    li.addEventListener('click', () => {
+        selectedImage = mainProductObject.colorImage[index].image;
+        imgElement.src = selectedImage;
+        imageLiItems.forEach(item => {
+            item.classList.remove('active');
+        });
+        li.classList.add('active');
+        colorLiItems[index].classList.add('active');
+        colorLiItems.forEach((item, i) => {
+            if (i !== index) {
+                item.classList.remove('active');
+            }
+        });
+    });
+});
+
+
+
+function setLocalStorage(selectedWatches){
+    localStorage.setItem('cart', JSON.stringify(selectedWatches))
+}
+function addToCart(event) {
+    event.preventDefault();
+    let menuExists = false;
+    let localStorageWatches = JSON.parse(localStorage.getItem('cart')) || [];
+    userBasket = localStorageWatches;
+    userBasket.forEach(function(watch) {
+        if (watch.id === Number(mainProductNumber)) {
+            watch.count = Number(watch.count) + Number(inputElement.value);
+            menuExists = true;
+        }
+    });
+    if (!menuExists) {
+        countProductsElem.innerHTML = userBasket.length
+        countProductsMobileElem.innerHTML = userBasket.length
+        mainProductObject.count = inputElement.value;
+        userBasket.push(mainProductObject);
+    }
+    setLocalStorage(userBasket);
+    window.location.href = 'cartpage.html';
+}
+addToCartBtn.addEventListener('click',addToCart)
+
+function setLocalStorageWish(selectedWatches){
+    localStorage.setItem('wishlist', JSON.stringify(selectedWatches))
+}
+function addToWishlist(event) {
+    event.preventDefault();
+    let menuExists = false;
+    let localStorageWatches = JSON.parse(localStorage.getItem('wishlist')) || [];
+    wishlist = localStorageWatches;
+    wishlist.forEach(function(watch) {
+        if (watch.id === Number(mainProductNumber)) {
+            menuExists = true;
+        }
+    });
+    if (!menuExists) {
+        wishlist.push(mainProductObject);
+    }
+    setLocalStorageWish(wishlist);
+}
+addToWishlistBtn.addEventListener('click',addToWishlist)
+
+
+
+
+
+
+
+const collectionCollapse = $.querySelector('.collection-collapse-block');
+const openCategory = $.querySelector('.collection-collapse-block .collapse-block-title');
+
+openCategory.addEventListener('click', () => {
+    collectionCollapse.classList.toggle('open');
+})
 
 
 
