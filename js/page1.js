@@ -299,7 +299,7 @@ let watches = [
         watchName:'watch16',
         PriceAfterDiscount:80.00,
         PriceBeforeDiscount:160.00,
-        colorImage : [{color : 'bisque',image : "../image/watches/watch16/15.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
+        colorImage : [{color : 'bisque',image : "../image/watches/watch16/15.jpg"},{color : 'palegoldenrod',image : "../image/watches/watch16/13.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
         new : true,
         sale : true,
         best : false,

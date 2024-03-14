@@ -187,7 +187,7 @@ let watches = [
         watchName:'watch16',
         PriceAfterDiscount:80.00,
         PriceBeforeDiscount:160.00,
-        colorImage : [{color : 'bisque',image : "../image/watches/watch16/15.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
+        colorImage : [{color : 'bisque',image : "../image/watches/watch16/15.jpg"},{color : 'palegoldenrod',image : "../image/watches/watch16/13.jpg"},{color : 'silver', image : '../image/watches/watch16/19.jpg'}],
         new : true,
         sale : true,
         best : false,
@@ -375,6 +375,7 @@ const addBtn = $.querySelector('.qty-box .input-group span button.quantity-right
 const imagesUlElem = $.querySelector('.section-page .container-section .more-imag ul');
 const addToCartBtn = $.querySelector('.watch-specifications .product-buttons .btn-solid:nth-child(1)');
 const addToWishlistBtn = $.querySelector('.watch-specifications .product-icon .wishlist-btn');
+const descriptionPElem = $.querySelector('.more-details .tab-content p');
 
 
 let locationPage = new URLSearchParams(location.search);
@@ -390,9 +391,10 @@ if(mainProductObject){
     PriceBeforeDiscount.innerHTML = formatPrice(mainProductObject.PriceBeforeDiscount) ;
     PriceAfterDiscount.innerHTML = formatPrice(mainProductObject.PriceAfterDiscount) ;
     discountPercent.innerHTML = Math.round(( (mainProductObject.PriceBeforeDiscount - mainProductObject.PriceAfterDiscount) / mainProductObject.PriceBeforeDiscount ) * 100) + '% Off'; 
-    colorsUlElem.innerHTML = colorLiElements
-    imagesUlElem.innerHTML = imageLiElements
-    imgElement.setAttribute('src',mainProductObject.colorImage[0].image)
+    colorsUlElem.innerHTML = colorLiElements;
+    imagesUlElem.innerHTML = imageLiElements;
+    imgElement.setAttribute('src',mainProductObject.colorImage[0].image);
+    descriptionPElem.innerHTML = mainProductObject.description;
 }
 
 
@@ -511,6 +513,276 @@ function addToWishlist(event) {
     setLocalStorageWish(wishlist);
 }
 addToWishlistBtn.addEventListener('click',addToWishlist)
+
+const navDescription =$.querySelector('#ngb-nav-1');
+const naveVideo =$.querySelector('#ngb-nav-2');
+const navReview =$.querySelector('#ngb-nav-3');
+const description = $.querySelector('.tab-pane.description')
+const video = $.querySelector('.tab-pane.video')
+const review = $.querySelector('.tab-pane.review')
+
+navDescription.addEventListener('click', event => {
+    event.preventDefault();
+    description.classList.add('show');
+    video.classList.remove('show');
+    review.classList.remove('show');
+    navDescription.classList.add('active');
+    naveVideo.classList.remove('active');
+    navReview.classList.remove('active');
+})
+naveVideo.addEventListener('click', event => {
+    event.preventDefault();
+    video.classList.add('show');
+    description.classList.remove('show');
+    review.classList.remove('show');
+    navDescription.classList.remove('active');
+    naveVideo.classList.add('active');
+    navReview.classList.remove('active');
+})
+navReview.addEventListener('click', event => {
+    event.preventDefault();
+    review.classList.add('show');
+    description.classList.remove('show');
+    video.classList.remove('show');
+    navDescription.classList.remove('active');
+    naveVideo.classList.remove('active');
+    navReview.classList.add('active');
+})
+
+
+
+
+
+
+for(let i = 0 ; i < watches.slice(0, 6).length ; i++){
+    const currentWatch = watches[i];
+    if (currentWatch && currentWatch.colorImage) {
+        createBoxRelatedProducts(i+1, currentWatch.colorImage[0]?.image , currentWatch.watchName , currentWatch.PriceAfterDiscount , currentWatch.PriceBeforeDiscount , currentWatch.colorImage, currentWatch.sale,currentWatch.description);
+    }
+}
+const watchesContainer = $.querySelector('.section-container .watches');
+
+async function createBoxRelatedProducts (id, image, watchName, PriceAfterDiscount, PriceBeforeDiscount, colors, category,description){
+    let colorLiElements = createColorLiElem2(colors);
+    const watchContainer = document.createElement('div');
+    await watchContainer.classList.add('watch');
+    watchContainer.innerHTML = `<a href="watch.html?watch=${id}" class="imglink"><img src="${image}">
+    <span class="new">NEW</span>
+    ${category ? '<span class="sale">ON SALE</span>' : ''}
+    <span class="cart-box">
+        <button title="Add to cart" class="ng-star-inserted" onclick="addMenuToBasketArray(event, ${id})">
+            <i class="ti-shopping-cart"></i>
+        </button>
+        <button title="Add to Wishlist" class="wish-btn" onclick="addWatchToWishlist(event, ${id})">
+            <i class="ti-heart"></i>
+        </button>
+        <button title="Quick View" onclick="quickViewShow(event, ${id})">
+            <i class="ti-search"></i>
+        </button>
+        <button title="Compare" onclick="addWatchToCompareList(event, ${id})">
+            <i class="ti-reload"></i>
+        </button>
+    </span></a>
+    <div class="star">
+        <i class="fa fa-star" style="color: #edb867;"></i>
+        <i class="fa fa-star" style="color: #edb867;"></i>
+        <i class="fa fa-star" style="color: #edb867;"></i>
+        <i class="fa fa-star" style="color: #edb867;"></i>
+        <i class="fa fa-star" style="color: #edb867;"></i>
+    </div>
+    <div class="description-watch">
+        <a href="watch.html?watch=${id}" class="watch-name">${watchName}</a>
+        <h4 class="price">${formatPrice(PriceAfterDiscount)} <span>${formatPrice(PriceBeforeDiscount)}</span></h4>
+        <ul class="colors">
+            ${colorLiElements}
+        </ul>
+    </div>`;
+    
+
+
+
+    watchesContainer.appendChild(watchContainer);
+    
+    const colorLiItems = watchContainer.querySelectorAll('.related-products .section-container .watches .description-watch .colors .color');
+    colorLiItems.forEach((li, index) => {
+        li.addEventListener('click', () => {
+            const selectedImage = colors[index].image;
+            const imgElement = watchContainer.querySelector('img');
+            imgElement.src = selectedImage;
+        });
+    });
+}
+function createColorLiElem2(colors) {
+    let colorLiElements = "";
+    colors.forEach(colorObj => {
+        colorLiElements += `<li class="color" style="background-color: ${colorObj.color};"></li>`;
+    });
+    return colorLiElements;
+}
+
+const modalBackdrop = $.querySelector('.modal-backdrop')
+const modal = $.querySelector('.modal')
+const imgModal = $.querySelector('.modal-body .content .image img');
+const nameWatch = $.querySelector('.product-right h2');
+const PriceBeforeDiscountModal = $.querySelector('.product-right h3 del')
+const PriceAfterDiscountModal = $.querySelector('.product-right h3 .mianPrice')
+const coloresUlElem = $.querySelector('.product-right .color-variant')
+const minusBtnModal = $.querySelector('.modal .qty-box .input-group span .quantity-left-minus')
+const inputElemModal = $.querySelector('.product-right input[name="quantity"]')
+const nextBtnModal = $.querySelector('.modal .qty-box .input-group span .quantity-right-plus')
+let watchSelect
+function quickViewShow (event, watchId){
+    event.preventDefault();
+    modal.style.display = "block"
+    modalBackdrop.style.display = 'block'
+    modalBackdrop.classList.add('show')
+    watchSelect = watches.find(watch => {
+        return watch.id === watchId
+    })
+    imgModal.setAttribute('src' , watchSelect.colorImage[0].image);
+    nameWatch.innerHTML = watchSelect.watchName;
+    PriceBeforeDiscountModal.innerHTML = formatPrice(watchSelect.PriceBeforeDiscount);
+    PriceAfterDiscountModal.innerHTML = formatPrice(watchSelect.PriceAfterDiscount);
+    coloresUlElem.innerHTML = ''
+    watchSelect.colorImage.forEach( color => {
+        coloresUlElem.insertAdjacentHTML('beforeend' , `<li class="sienna ng-star-inserted" style="background-color:${color.color};"></li>`)
+    })
+}
+const closeModal = $.querySelector('.modal-content .modal-body .close')
+closeModal?.addEventListener('click', event => {
+    event.preventDefault();
+    modal.style.display = "none"
+    modalBackdrop.classList.remove('show')
+    modalBackdrop.style.display = 'none'
+    inputElemModal.value = 1
+})
+function addWatchToWishlist(event,watchId){
+    event.preventDefault();
+    let localStorageWatches = JSON.parse(localStorage.getItem('wishlist')) || [];
+    Wishlist = localStorageWatches;
+    let wishExists = false;
+    Wishlist.forEach(function(watch) {
+        if (watch.id === watchId) {
+            wishExists = true;
+        }
+    });
+    if (!wishExists) {
+        let wish = watches.find(function(watch) {
+            return watch.id === watchId;
+        });
+        Wishlist.push(wish);
+    }
+    setLocalStorageWish(Wishlist)
+}
+nextBtnModal.addEventListener('click', () => {
+    let currentValue = parseInt(inputElemModal.value);
+    currentValue++;
+    inputElemModal.value = currentValue;
+})
+minusBtnModal.addEventListener('click', () => {
+    if (inputElemModal.value > 0) {
+        let currentValue = parseInt(inputElemModal.value);
+        currentValue--;
+        inputElemModal.value = currentValue;
+    }else{
+        inputElemModal.value = 0
+    }
+})
+coloresUlElem.addEventListener('click', (event) => {
+    if (event.target.tagName === 'LI') {
+        // تنظیم تصویر مربوط به li کلیک شده در imgModal
+        const color = event.target.style.backgroundColor;
+        const colorIndex = Array.from(coloresUlElem.children).indexOf(event.target);
+        imgModal.setAttribute('src', watchSelect.colorImage[colorIndex].image);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function addWatchToCompareList(event, watchId){
+    event.preventDefault();
+    let compareExists = false;
+    let localStorageWatches = JSON.parse(localStorage.getItem('compare')) || [];
+    compareList = localStorageWatches;
+    compareList.forEach(function(watch) {
+        if (watch.id === watchId) {
+            compareExists = true;
+        }
+    });
+
+    if (!compareExists) {
+        let compare = watches.find(function(watch) {
+            return watch.id === watchId;
+        });
+
+        compareList.push(compare);
+    }
+    
+    setLocalStorageCompare(compareList)
+}
+function setLocalStorageCompare(selectedWatches){
+    localStorage.setItem('compare', JSON.stringify(selectedWatches))
+}
+
+const watchesNewContainer = $.querySelector('.new-products .watches-new')
+let watchesSlice = watches.slice(0, 6)
+let currentPage = 1
+function createBoxNewProducts (allWatches, watchesContainer , rowsCount, currentPage){
+    watchesContainer.innerHTML = ''
+    let endIndex = rowsCount * currentPage;
+    let startIndex = endIndex - rowsCount;
+    let paginatedWatches = allWatches.slice(startIndex, endIndex)
+    paginatedWatches.forEach(watch => {
+        const watchContainer = document.createElement('div');
+        watchContainer.classList.add('watch-new');
+    
+        watchContainer.insertAdjacentHTML('beforeend', `<a href="watch.html?watch=${watch.id}">
+        <img alt="watch" class="img-fluid" src="${watch.colorImage[0].image}">
+        </a>
+        <div class="media-body">
+            <a href="watch.html?watch=${watch.id}"><h6>${watch.watchName}</h6></a>
+            <h4> ${formatPrice(watch.PriceAfterDiscount)} <del><span  class="money"> ${formatPrice(watch.PriceBeforeDiscount)} </span></del>
+            </h4>
+        </div>`)
+        watchesContainer.appendChild(watchContainer)
+    })
+}
+createBoxNewProducts(watchesSlice, watchesNewContainer, 3, currentPage)
+
+const nextPageBtn = $.querySelector('.new-products .main-title-border .change .ti-angle-right');
+const prevPageBtn = $.querySelector('.new-products .main-title-border .change .ti-angle-left');
+function changePage(){
+    if(currentPage === 1){
+        currentPage++;
+    }else if(currentPage === 2){
+        currentPage--;
+    }
+    createBoxNewProducts(watchesSlice, watchesNewContainer, 3, currentPage)
+}
+nextPageBtn.addEventListener('click', changePage)
+prevPageBtn.addEventListener('click', changePage)
+
+
+
+
+
+
+
 
 
 

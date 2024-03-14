@@ -1085,6 +1085,7 @@ tr {
 }
 .compare-page .table-wrapper .table .product-name {
     width: 15%;
+    text-align: left;
 }
 .compare-page .table-wrapper .table tbody tr th,
 .compare-page .table-wrapper .table tbody tr td {
