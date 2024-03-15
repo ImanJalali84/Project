@@ -630,7 +630,9 @@ const coloresUlElem = $.querySelector('.product-right .color-variant')
 const minusBtnModal = $.querySelector('.modal .qty-box .input-group span .quantity-left-minus')
 const inputElemModal = $.querySelector('.product-right input[name="quantity"]')
 const nextBtnModal = $.querySelector('.modal .qty-box .input-group span .quantity-right-plus')
-let watchSelect
+const addToCartBtnModal = $.querySelector('.product-right a.add-cart')
+const viewDetailBtn = $.querySelector('.product-right a.view-watch')
+let watchSelect;
 function quickViewShow (event, watchId){
     event.preventDefault();
     modal.style.display = "block"
@@ -647,6 +649,10 @@ function quickViewShow (event, watchId){
     watchSelect.colorImage.forEach( color => {
         coloresUlElem.insertAdjacentHTML('beforeend' , `<li class="sienna ng-star-inserted" style="background-color:${color.color};"></li>`)
     })
+    addToCartBtnModal.addEventListener('click',() => {
+        addToCartModal(watchSelect)
+    })
+    viewDetailBtn.setAttribute('href', `watch.html?watch=${watchId}`)
 }
 const closeModal = $.querySelector('.modal-content .modal-body .close')
 closeModal?.addEventListener('click', event => {
@@ -690,12 +696,31 @@ minusBtnModal.addEventListener('click', () => {
 })
 coloresUlElem.addEventListener('click', (event) => {
     if (event.target.tagName === 'LI') {
-        // تنظیم تصویر مربوط به li کلیک شده در imgModal
         const color = event.target.style.backgroundColor;
         const colorIndex = Array.from(coloresUlElem.children).indexOf(event.target);
         imgModal.setAttribute('src', watchSelect.colorImage[colorIndex].image);
     }
 });
+
+function addToCartModal(watchSelect) {
+    let menuExists = false;
+    let localStorageWatches = JSON.parse(localStorage.getItem('cart')) || [];
+    userBasket = localStorageWatches;
+    userBasket.forEach(function(watch) {
+        if (watch.id === watchSelect.id) {
+            watch.count = Number(watch.count) + Number(inputElemModal.value);
+            menuExists = true;
+        }
+    });
+    if (!menuExists) {
+        countProductsElem.innerHTML = userBasket.length
+        countProductsMobileElem.innerHTML = userBasket.length
+        watchSelect.count = inputElemModal.value;
+        userBasket.push(watchSelect);
+    }
+    setLocalStorage(userBasket);
+}
+
 
 
 
