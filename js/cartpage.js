@@ -267,6 +267,103 @@ function updateCount (watchID,newCount){
 window.addEventListener('load', getLocalStorage)
 
 
+
+
+const menubarLinkHome = $.querySelector(' .header-down .container .menu .menu-right .link-menu .home')
+const menubarLinkHomechoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .home .choose')
+const menubarLinkShop = $.querySelector(' .header-down .container .menu .menu-right .link-menu .shop')
+const menubarLinkShopchoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .shop .choose')
+const menubarLinkProducts = $.querySelector(' .header-down .container .menu .menu-right .link-menu .products')
+const menubarLinkProductschoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .products .choose')
+const menubarLinkFeatures = $.querySelector(' .header-down .container .menu .menu-right .link-menu .features')
+const menubarLinkFeatureschoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .features .choose')
+const menubarLinkPages = $.querySelector(' .header-down .container .menu .menu-right .link-menu .pages')
+const menubarLinkPageschoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .pages .choose')
+const menubarLinkBlogs = $.querySelector(' .header-down .container .menu .menu-right .link-menu .blogs')
+const menubarLinkBlogschoose = $.querySelector(' .header-down .container .menu .menu-right .link-menu .blogs .choose')
+
+
+const menubarLinkHomeLi = $.querySelector('.header-down .container .menu .menu-right .link-menu .home .choose li')
+const menubarLinkHomeLiChoose = $.querySelector('.header-down .container .menu .menu-right .link-menu .home .choose li .choose-second')
+const menubarLinkProductsLi = $.querySelector('.header-down .container .menu .menu-right .link-menu .products .choose li')
+const menubarLinkProductsLiChoose = $.querySelector('.header-down .container .menu .menu-right .link-menu .products .choose li .choose-second')
+const menubarLinkPagesLi1 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li1')
+const menubarLinkPagesLiChoose1 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li1 .choose-second1')
+const menubarLinkPagesLi2 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li2')
+const menubarLinkPagesLiChoose2 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li2 .choose-second2')
+const menubarLinkFeaturesLi = $.querySelectorAll('.header-down .container .menu .menu-right .link-menu .features .choose .column .title')
+const menubarLinkFeaturesLiChoose = $.querySelectorAll('.header-down .container .menu .menu-right .link-menu div .column .subset')
+
+function showChoose (choose){
+    choose.classList.toggle('opensubmenu')
+}
+menubarLinkHome.addEventListener('click', event => {
+    showChoose(menubarLinkHomechoose)
+})
+menubarLinkShop.addEventListener('click', () => {
+    showChoose(menubarLinkShopchoose)
+})
+menubarLinkProducts.addEventListener('click', () => {
+    showChoose(menubarLinkProductschoose)
+})
+menubarLinkFeatures.addEventListener('click', () => {
+    showChoose(menubarLinkFeatureschoose)
+})
+menubarLinkPages.addEventListener('click', () => {
+    showChoose(menubarLinkPageschoose)
+})
+menubarLinkBlogs.addEventListener('click', () => {
+    showChoose(menubarLinkBlogschoose)
+})
+function showChooseLi (choose){
+    choose.classList.toggle('opensubmenuli')
+}
+menubarLinkHomeLi.addEventListener('click', e => {
+    e.stopPropagation();
+    showChooseLi(menubarLinkHomeLiChoose)
+})
+menubarLinkProductsLi.addEventListener('click', e => {
+    e.stopPropagation();
+    showChooseLi(menubarLinkProductsLiChoose)
+})
+menubarLinkPagesLi1.addEventListener('click', e => {
+    e.stopPropagation();
+    showChooseLi(menubarLinkPagesLiChoose1)
+})
+menubarLinkPagesLi2.addEventListener('click', e => {
+    e.stopPropagation();
+    showChooseLi(menubarLinkPagesLiChoose2)
+})
+
+menubarLinkFeaturesLi.forEach( (li,index) => {
+    li.addEventListener('click', e => {
+        e.stopPropagation();
+        if(menubarLinkFeaturesLiChoose[index].style.display === 'block'){
+            menubarLinkFeaturesLiChoose[index].style.display = 'none';
+        }else{
+            menubarLinkFeaturesLiChoose[index].style.display = 'block';
+        }
+    })
+})
+
+
+
+const darkModeBtn = $.querySelector('header .dark-mode');
+darkModeBtn.addEventListener('click', () => {
+  $.body.classList.toggle('dark')
+  if($.body.classList.contains("dark")){
+    localStorage.setItem('theme', 'dark')
+  }else{
+    localStorage.setItem('theme', 'light')
+  }
+})
+window.onload = function(){
+    let localStrongeTheme = localStorage.getItem('theme')
+    if(localStrongeTheme === 'dark'){
+    $.body.classList.toggle("dark")
+    }
+}
+
 const navBarBtn = $.querySelector('.header-down .container .menu .menu-right .icon-menu .icon-menu-bar i')
 const closeNavBarBtn = $.querySelector('.header-down .container .menu .menu-right .link-menu .back-btn')
 const navBar = $.querySelector('.menu .menu-right .link-menu')
