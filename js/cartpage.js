@@ -124,9 +124,32 @@ const tableBody = $.querySelector ('.table tbody')
 
     userBasketArray.forEach(watch => {
                 tableBody.insertAdjacentHTML('beforeend', `<tr>
-                        <td><a  href="#"><img src="${watch.colorImage[0].image}"></a></td>
+                        <td><a  href="watch.html?watch=${watch.id}"><img src="${watch.colorImage[0].image}"></a></td>
                         <td>
-                            <a href="#">${watch.watchName}</a>
+                            <a href="watch.html?watch=${watch.id}">${watch.watchName}</a>
+                            <div class="mobile-cart-content row">
+                                <div class="col">
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <span class="input-group-prepend">
+                                                <button type="button" data-type="minus" class="btn quantity-left-minus" onclick="reduceNumberProduct(${watch.id})"><i class="ti-angle-left"></i></button>
+                                            </span>
+                                            <input type="text" data-product-id="${watch.id}" value="${watch.count}" name="quantity" class="form-control input-number ng-untouched ng-pristine" ng-reflect-name="quantity" ng-reflect-is-disabled="" ng-reflect-model="1" disabled="">
+                                            <span class="input-group-prepend">
+                                                <button type="button" data-type="plus" class="btn quantity-right-plus" onclick="addCountProduct(${watch.id})"><i class="ti-angle-right"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h2 class="td-color">  ${formatPrice(watch.PriceAfterDiscount)} </h2>
+                                </div>
+                                <div class="col">
+                                    <h2 class="td-color">
+                                        <a class="icon"><i class="ti-close"></i></a>
+                                    </h2>
+                                </div>
+                            </div>
                         </td>
                         <td>
                             <h2> ${formatPrice(watch.PriceAfterDiscount)} </h2>
@@ -288,9 +311,9 @@ const menubarLinkHomeLiChoose = $.querySelector('.header-down .container .menu .
 const menubarLinkProductsLi = $.querySelector('.header-down .container .menu .menu-right .link-menu .products .choose li')
 const menubarLinkProductsLiChoose = $.querySelector('.header-down .container .menu .menu-right .link-menu .products .choose li .choose-second')
 const menubarLinkPagesLi1 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li1')
-const menubarLinkPagesLiChoose1 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li1 .choose-second1')
+const menubarLinkPagesLiChoose1 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li1 .choose-second')
 const menubarLinkPagesLi2 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li2')
-const menubarLinkPagesLiChoose2 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li2 .choose-second2')
+const menubarLinkPagesLiChoose2 = $.querySelector('.header-down .container .menu .menu-right .link-menu .pages .choose .li2 .choose-second')
 const menubarLinkFeaturesLi = $.querySelectorAll('.header-down .container .menu .menu-right .link-menu .features .choose .column .title')
 const menubarLinkFeaturesLiChoose = $.querySelectorAll('.header-down .container .menu .menu-right .link-menu div .column .subset')
 
@@ -365,11 +388,21 @@ window.onload = function(){
 }
 
 const navBarBtn = $.querySelector('.header-down .container .menu .menu-right .icon-menu .icon-menu-bar i')
+const navBarBtn2 = $.querySelector('.header-down .container .menu .menu-left .icon-menu-bar i')
 const closeNavBarBtn = $.querySelector('.header-down .container .menu .menu-right .link-menu .back-btn')
 const navBar = $.querySelector('.menu .menu-right .link-menu')
 navBarBtn.addEventListener('click', () => {
-    navBar.style.right = 0
+    openMenu();
+})
+navBarBtn2.addEventListener('click', () => {
+    openMenu();
 })
 closeNavBarBtn.addEventListener('click', () => {
     navBar.style.right = -300 + 'px'
 })
+
+
+function openMenu (){
+    navBar.style.right = 0
+    console.log('hi');
+}

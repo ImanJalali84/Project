@@ -18,7 +18,7 @@
     transition: 0.2s linear;
 }
 :root{
-    --theme-deafult: #e4604a;
+    --theme-deafult: #ff4c3b;
     --background-color-recent: #f1f5f4;
     --bs-body-color: #212529;
     --black-color: #000000;
@@ -57,6 +57,9 @@
     --color-948e8c: #948e8c;
     --color-fdf1ef: #fdf1ef;
     --color-6f6f6f: #6f6f6f;
+}
+html{
+    overflow-x: auto;
 }
 
 body{
@@ -2719,6 +2722,9 @@ footer .end{
 /* //////////////////////////////////////////////////Media Queries\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 
 @media (max-width: 1367px){
+    .header-down .container .menu .menu-right .link-menu h3 {
+        font-size: 14px;
+    }
     /* //////////////////////////////////////////////////Offer Box\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 
     .offer-box-container{
@@ -3214,6 +3220,9 @@ footer .end{
         border-bottom: 1px solid var(--color-eeeeee);
         padding-bottom: 10px;
         width: 50%;
+    }
+    .about-container .abouts .about .footer-title h4:not(.content-right h4){
+        width: 100%;
     }
     .sub-footer{
         flex-direction: column;
