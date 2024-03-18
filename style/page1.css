@@ -1446,7 +1446,7 @@ header .dark-mode{
 .dark .add_to_cart .empty-cart-cls h4 {
     color: #e7eaec;
 }
-.dark .add_to_cart .empty-cart-cls .width-btn{
+.add_to_cart .empty-cart-cls .width-btn{
     width: 182px;
 }
 
