@@ -104,7 +104,7 @@ function basketMenusGenerator(userBasketArray){
     </div>
     <div class="row cart-buttons ng-star-inserted">
         <div class="col-6">
-            <a class="btn btn-solid" href="">continue shopping</a>
+            <a class="btn btn-solid" href="page1.html">continue shopping</a>
         </div>
         <div class="col-6">
             <a class="btn btn-solid" href="" onclick="removeAllCart()">check out</a>

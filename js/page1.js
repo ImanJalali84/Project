@@ -66,13 +66,24 @@ function scrollSliders (element,elementWidth){
     startX = event.clientX - element.getBoundingClientRect().left;
     scrollLeft = element.scrollLeft;
     });
-
+    element.addEventListener('touchstart', (event) => {
+        isDown = true;
+        startX = event.touches[0].clientX - element.getBoundingClientRect().left;
+        scrollLeft = element.scrollLeft;
+    });
     element.addEventListener('mouseup', () => {
     isDown = false;
+    });
+    element.addEventListener('touchend', () => {
+        isDown = false;
     });
 
     element.addEventListener('mouseleave', () => {
     isDown = false;
+    });
+
+    element.addEventListener('touchcancel', () => {
+        isDown = false;
     });
 
     element.addEventListener('mousemove', (event) => {
@@ -92,6 +103,28 @@ function scrollSliders (element,elementWidth){
                 behavior: 'smooth'
             })
         })
+    });
+
+
+
+
+    element.addEventListener('touchmove', (event) => {
+        if (!isDown) return;
+        event.preventDefault();
+        const x = event.touches[0].clientX - element.getBoundingClientRect().left;
+        const walk = (x - startX);
+        let left1 = scrollLeft - walk;
+        if (left1 < 0) {
+            left1 = elementWidth;
+        } else if (left1 > elementWidth) {
+            left1 = 0;
+        }
+        requestAnimationFrame(() => {
+            element.scrollTo({
+                left: left1,
+                behavior: 'smooth'
+            });
+        });
     });
 
 }
@@ -634,7 +667,7 @@ function cartSideMenusGenerator(userBasketArray){
             <h4 class="mt-3">
                 <strong>Your Cart is Empty</strong>
             </h4>
-            <a class="btn btn-solid width-btn" href="">continue shopping</a>
+            <a class="btn btn-solid width-btn" href="page.html">continue shopping</a>
         </div>`)
     }
 }
