@@ -618,7 +618,7 @@ function cartSideMenusGenerator(userBasketArray){
         cartMedia.insertAdjacentHTML('beforeend', `<ul class="cart_total">
         <li>
             <div class="total">
-                <h5> subtotal : <span>$156.00</span></h5>
+                <h5> subtotal : <span></span></h5>
             </div>
         </li>
         <li>
@@ -634,7 +634,7 @@ function cartSideMenusGenerator(userBasketArray){
             <h4 class="mt-3">
                 <strong>Your Cart is Empty</strong>
             </h4>
-            <a class="btn btn-solid" href="">continue shopping</a>
+            <a class="btn btn-solid width-btn" href="">continue shopping</a>
         </div>`)
     }
 }

@@ -1307,12 +1307,18 @@ header .dark-mode{
     height: 100vh;
     overflow: auto;
 }
+.dark .add_to_cart .cart-inner {
+    background-color: #2b2b2b;
+}
 .add_to_cart .cart-inner .cart_top {
     display: flex;
     padding: 20px;
     border-bottom: 1px solid #efefef;
     margin-bottom: 20px;
     align-items: center;
+}
+.dark .add_to_cart .cart-inner .cart_top {
+    border-color: #404040;
 }
 .add_to_cart .cart-inner .cart_media {
     padding: 0 20px;
@@ -1325,12 +1331,22 @@ header .dark-mode{
     text-transform: uppercase;
     margin-bottom: 0;
 }
+.dark .add_to_cart .cart-inner .cart_top h3{
+    color: #ffffff;
+}
 .add_to_cart .cart-inner .cart_top .close-cart {
     margin-left: auto;
 }
 .add_to_cart .cart-inner .cart_top .close-cart i {
     color: black;
     font-size: 18px;
+}
+.dark .add_to_cart .cart-inner .cart_top .close-cart i {
+    color: #ffffff;
+}
+.add_to_cart .cart-inner .cart_media .close-circle i:hover {
+    color: #000000;
+    transition: all 0.5s ease;
 }
 .add_to_cart .cart-inner .cart_media li {
     position: relative;
@@ -1362,6 +1378,9 @@ header .dark-mode{
     letter-spacing: 0.03em;
     line-height: 1;
 }
+.dark .add_to_cart .cart-inner .cart_media li .media .media-body h4 {
+    color: rgba(255, 255, 255, 0.7);
+}
 .add_to_cart .cart-inner .cart_media li .media .media-body h4 span{
     color: #777777;
     font-size: 16px;
@@ -1381,6 +1400,9 @@ header .dark-mode{
     border-bottom: 1px solid #f1f5f4;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.dark .add_to_cart .cart-inner .cart_media li .total {
+    border-color: #404040;
 }
 .add_to_cart .cart-inner .cart_media li .total h5{
     text-transform: capitalize;
@@ -1421,7 +1443,12 @@ header .dark-mode{
     line-height: 1;
     margin-top: 1rem !important;
 }
-
+.dark .add_to_cart .empty-cart-cls h4 {
+    color: #e7eaec;
+}
+.dark .add_to_cart .empty-cart-cls .width-btn{
+    width: 182px;
+}
 
 /* //////////////////////////////////////////////////Photo Slider\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 .container-slider{
