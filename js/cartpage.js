@@ -146,7 +146,7 @@ const tableBody = $.querySelector ('.table tbody')
                                 </div>
                                 <div class="col">
                                     <h2 class="td-color">
-                                        <a class="icon"><i class="ti-close"></i></a>
+                                        <a class="icon" onclick=removeMenuFromBasket(${watch.id})><i class="ti-close"></i></a>
                                     </h2>
                                 </div>
                             </div>
@@ -404,5 +404,35 @@ closeNavBarBtn.addEventListener('click', () => {
 
 function openMenu (){
     navBar.style.right = 0
-    console.log('hi');
 }
+
+
+
+
+const openNavBtnHeaderLeft = $.querySelector('.bar-style');
+const closeNavBtnHeaderLeft = $.querySelector('header .sidenav .sidebar-back')
+const navHeaderLeft = $.querySelector('#mySidenav')
+const navHeaderLeftMore = $.querySelectorAll('.more');
+const navHeaderLeftMoreUlElem = $.querySelectorAll('.more > ul')
+const sidebarOverlay = $.querySelector('.sidebar-overlay')
+
+
+openNavBtnHeaderLeft.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.add('openSide')
+})
+closeNavBtnHeaderLeft.addEventListener('click', () => {
+    navHeaderLeft.classList.remove('openSide')
+})
+sidebarOverlay.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.remove('openSide')
+})
+
+
+navHeaderLeftMore.forEach( (li, index) => {
+    li.addEventListener('click', e => {
+        e.preventDefault();
+        navHeaderLeftMoreUlElem[index].classList.toggle('opensub1')
+    })
+})

@@ -412,5 +412,34 @@ closeNavBarBtn.addEventListener('click', () => {
 
 function openMenu (){
     navBar.style.right = 0
-    console.log('hi');
 }
+
+
+
+const openNavBtnHeaderLeft = $.querySelector('.bar-style');
+const closeNavBtnHeaderLeft = $.querySelector('header .sidenav .sidebar-back')
+const navHeaderLeft = $.querySelector('#mySidenav')
+const navHeaderLeftMore = $.querySelectorAll('.more');
+const navHeaderLeftMoreUlElem = $.querySelectorAll('.more > ul')
+const sidebarOverlay = $.querySelector('.sidebar-overlay')
+
+
+openNavBtnHeaderLeft.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.add('openSide')
+})
+closeNavBtnHeaderLeft.addEventListener('click', () => {
+    navHeaderLeft.classList.remove('openSide')
+})
+sidebarOverlay.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.remove('openSide')
+})
+
+
+navHeaderLeftMore.forEach( (li, index) => {
+    li.addEventListener('click', e => {
+        e.preventDefault();
+        navHeaderLeftMoreUlElem[index].classList.toggle('opensub1')
+    })
+})

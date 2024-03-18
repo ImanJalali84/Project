@@ -927,6 +927,22 @@ window.onload = function(){
 
 
 
+
+const nav = $.querySelector('.nav')
+const openNavBtn = $.querySelector('.section-page .container-section .filter-main-btn span');
+const closeNavBtn = $.querySelector('.collection-mobile-back span');
+openNavBtn.addEventListener('click', () => {
+    nav.style.left = 0 
+})
+closeNavBtn.addEventListener('click', () => {
+    nav.style.left = -350 + 'px'
+})
+
+
+
+
+
+
 const navBarBtn = $.querySelector('.header-down .container .menu .menu-right .icon-menu .icon-menu-bar i')
 const navBarBtn2 = $.querySelector('.header-down .container .menu .menu-left .icon-menu-bar i')
 const closeNavBarBtn = $.querySelector('.header-down .container .menu .menu-right .link-menu .back-btn')
@@ -944,5 +960,33 @@ closeNavBarBtn.addEventListener('click', () => {
 
 function openMenu (){
     navBar.style.right = 0
-    console.log('hi');
 }
+
+
+
+const openNavBtnHeaderLeft = $.querySelector('.bar-style');
+const closeNavBtnHeaderLeft = $.querySelector('header .sidenav .sidebar-back')
+const navHeaderLeft = $.querySelector('#mySidenav')
+const navHeaderLeftMore = $.querySelectorAll('.more');
+const navHeaderLeftMoreUlElem = $.querySelectorAll('.more > ul')
+const sidebarOverlay = $.querySelector('.sidebar-overlay')
+
+
+openNavBtnHeaderLeft.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.add('openSide')
+})
+closeNavBtnHeaderLeft.addEventListener('click', () => {
+    navHeaderLeft.classList.remove('openSide')
+})
+sidebarOverlay.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.remove('openSide')
+})
+
+navHeaderLeftMore.forEach( (li, index) => {
+    li.addEventListener('click', e => {
+        e.preventDefault();
+        navHeaderLeftMoreUlElem[index].classList.toggle('opensub1')
+    })
+})

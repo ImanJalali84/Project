@@ -555,6 +555,10 @@ const cartItems = $.querySelectorAll('.shopping-cart')
 const countProductsElem = $.querySelector('.header-down .container .menu .menu-right .icon-menu .count-products-purchased')
 const countProductsMobileElem = $.querySelector('.mobile-fix-option .cart-btn .count-products-purchased')
 const checkOut = $.querySelector('.menu .menu-right .icon-menu .shopping-cart li .buttons .checkout')
+const cartNav = $.querySelector('.add_to_cart');
+const closeCartNavBtn = $.querySelector('.add_to_cart .cart-inner .cart_top .close-cart')
+const overlayCart = $.querySelector('.overlay')
+const cartMedia = $.querySelector('.add_to_cart .cart-inner .cart_media')
 let userBasket = []
 
 
@@ -585,6 +589,54 @@ function addMenuToBasketArray(event, watchId) {
     setLocalStorage(userBasket)
     getLocalStorage(userBasket)
     calcTotalPrice(userBasket)
+    cartNav.classList.add('openSide')
+}
+function cartSideMenusGenerator(userBasketArray){
+    if(userBasketArray.length){
+    const containerCartSide = $.createElement('ul');
+    containerCartSide.classList.add('cart_product')
+    cartMedia.innerHTML = ''
+    containerCartSide.innerHTML = ''
+
+        userBasketArray.forEach(function(watch){
+        containerCartSide.insertAdjacentHTML('beforeend', `<li>
+            <div class="media">
+                <a href="watch.html?watch=${watch.id}">
+                    <img class="me-3" src="${watch.colorImage[0].image}" alt="watch">
+                </a>
+                <div class="media-body">
+                    <a href="watch.html?watch=${watch.id}"><h4>${watch.watchName}</h4></a>
+                    <h4><span> ${watch.count} x ${formatPrice(watch.PriceAfterDiscount)} </span></h4>
+                </div>
+            </div>
+            <div class="close-circle">
+                <div onclick="removeMenuFromBasket(${watch.id})"><i aria-hidden="true" class="ti-trash"></i></div>
+            </div>
+        </li>`)
+        }) 
+        cartMedia.appendChild(containerCartSide)
+        cartMedia.insertAdjacentHTML('beforeend', `<ul class="cart_total">
+        <li>
+            <div class="total">
+                <h5> subtotal : <span>$156.00</span></h5>
+            </div>
+        </li>
+        <li>
+            <div class="buttons">
+                <a class="btn btn-solid btn-xs view-cart" href="cartpage.html">view cart</a>
+                <a class="btn btn-solid btn-xs checkout" onclick="removeAllCart()" href="">checkout</a>
+            </div>
+        </li>
+    </ul>`)
+    }else{
+        cartMedia.innerHTML = ''
+        cartMedia.insertAdjacentHTML('beforeend',`<div class="col-sm-12 empty-cart-cls text-start">
+            <h4 class="mt-3">
+                <strong>Your Cart is Empty</strong>
+            </h4>
+            <a class="btn btn-solid" href="">continue shopping</a>
+        </div>`)
+    }
 }
 function basketMenusGenerator(userBasketArray){
     cartItems.forEach(cartItem => {
@@ -601,7 +653,7 @@ function basketMenusGenerator(userBasketArray){
                         </div>
                         <div class="close-circle" onclick="removeMenuFromBasket(${watch.id})"><a href="#"><i class="fa fa-times"></i></a></div>
                     </li>`)
-                    })
+            })
                     cartItem.insertAdjacentHTML('beforeend',`<li>
                     <div class="total">
                         <h5>subtotal : <span>$00.00</span></h5>
@@ -611,7 +663,9 @@ function basketMenusGenerator(userBasketArray){
                     <div class="buttons">
                         <a class="view-cart" href="cartpage.html">view cart</a>
                         <a class="checkout" href="" onclick="removeAllCart()">checkout</a></div>
-                </li>`)}else{
+                </li>`)
+                
+            }else{
                 cartItem.innerHTML = ''
                 cartItem.insertAdjacentHTML('beforeend','<h5>Your cart is currently empty.</h5>')
             }
@@ -628,6 +682,7 @@ function removeMenuFromBasket (watchID){
     countProductsMobileElem.innerHTML = userBasket.length
     setLocalStorage(userBasket)
     basketMenusGenerator(userBasket)
+    cartSideMenusGenerator(userBasket)
     calcTotalPrice(userBasket)
 }
 
@@ -644,13 +699,14 @@ function getLocalStorage(){
     countProductsElem.innerHTML = userBasket.length
     countProductsMobileElem.innerHTML = userBasket.length
     basketMenusGenerator(userBasket)
+    cartSideMenusGenerator(userBasket)
     calcTotalPrice(userBasket)
 }
 
 function removeAllCart(){
     userBasket = []
     localStorage.removeItem('cart')
-    getLocalStorage(userBasket)
+    getLocalStorage()
 }
 
 
@@ -678,6 +734,14 @@ function updateCount (watchID,newCount){
     })
     calcTotalPrice(userBasket)
 }
+closeCartNavBtn.addEventListener('click', event => {
+    event.preventDefault();
+    cartNav.classList.remove('openSide')
+})
+overlayCart.addEventListener('click', event => {
+    event.preventDefault();
+    cartNav.classList.remove('openSide')
+})
 
 
 //    //////////////////////////////////////////////////Compare\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -974,5 +1038,34 @@ closeNavBarBtn.addEventListener('click', () => {
 
 function openMenu (){
     navBar.style.right = 0
-    console.log('hi');
 }
+
+
+
+
+const openNavBtnHeaderLeft = $.querySelector('.bar-style');
+const closeNavBtnHeaderLeft = $.querySelector('header .sidenav .sidebar-back')
+const navHeaderLeft = $.querySelector('#mySidenav')
+const navHeaderLeftMore = $.querySelectorAll('.more');
+const navHeaderLeftMoreUlElem = $.querySelectorAll('.more > ul')
+const sidebarOverlay = $.querySelector('.sidebar-overlay')
+
+
+openNavBtnHeaderLeft.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.add('openSide')
+})
+closeNavBtnHeaderLeft.addEventListener('click', () => {
+    navHeaderLeft.classList.remove('openSide')
+})
+sidebarOverlay.addEventListener('click', e => {
+    e.preventDefault();
+    navHeaderLeft.classList.remove('openSide')
+})
+
+navHeaderLeftMore.forEach( (li, index) => {
+    li.addEventListener('click', e => {
+        e.preventDefault();
+        navHeaderLeftMoreUlElem[index].classList.toggle('opensub1')
+    })
+})
